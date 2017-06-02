@@ -14,3 +14,21 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/despesas', function () {
+    return view('carteira.despesa');
+});
+Route::get('/receitas', function () {
+    return view('carteira.receita');
+});
+Route::get('/cadastro', function () {
+    return view('user.register');
+});
+Route::get('/login', function () {
+    return view('user.login');
+});
+Route::get('/contato', function () {
+    return view('carteira.contato');
+});
+Route::get('/conta', function () {
+    return view('carteira.conta');
+});
