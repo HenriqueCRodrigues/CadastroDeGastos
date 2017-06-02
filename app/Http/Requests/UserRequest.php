@@ -1,57 +1,43 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Requests;
 
-use App\User;
-use Validator;
-use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\ThrottlesLogins;
-use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use App\Http\Requests\Request;
 
-class AuthController extends Controller
+class UserRequest extends Request
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Registration & Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users, as well as the
-    | authentication of existing users. By default, this controller uses
-    | a simple trait to add these behaviors. Why don't you explore it?
-    |
-    */
-
-    use AuthenticatesAndRegistersUsers, ThrottlesLogins;
-
     /**
-     * Create a new authentication controller instance.
+     * Determine if the user is authorized to make this request.
      *
-     * @return void
+     * @return bool
      */
-    public function __construct()
+    public function authorize()
     {
-        $this->middleware('guest', ['except' => 'getLogout']);
+    
+        return true;
     }
 
     /**
-     * Get a validator for an incoming registration request.
+     * Get the validation rules that apply to the request.
      *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
+     * @return array
      */
-    protected function validator(array $data)
+    public function rules()
     {
-        return Validator::make($data, 
-            [
+        return [
             'name'                  => 'required|max:255',
             'email'                 => 'required|email|max:100|unique:users',
-            'login'                 => 'required|max:30|unique:users',
+            'login'                 => 'required|max:30|unique:users,email,'.$id.'',
             'password'              => 'required|confirmed|min:4',
             'password_confirmation' => 'required|min:6',
-            ],
-            
+        ];
+    }
 
-            [
+
+
+    public function messages()
+    {
+        return [
             'name.required'                   => 'É obrigatório inserir o Nome',
             'name.max'                        => 'O nome deve ter no maximo :max caracteres',
             
@@ -71,26 +57,13 @@ class AuthController extends Controller
             'password_confirmation.required'  => 'É obrigatório inserir a Confirmação de Senha.',
             'password_confirmation.confirmed' => 'O campo Confirmar Senha esta com valor diferente do campo Senha.',
             'passaword_confirmation.min'      => 'Digitar ao menos :min caracteres para a sua senha.',
-            
-            ],
 
+        ];
 
-            );
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return User
-     */
-    protected function create(array $data)
-    {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'login' => $data['login'],
-            'password' => bcrypt($data['password']),
-        ]);
-    }
+
+
+
+
 }

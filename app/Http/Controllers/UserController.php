@@ -70,22 +70,28 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
-        $user = User::findOrFail($id);
 
-        if(Auth::user()->id == $id) 
-        {
-        $user->name     = $request->name;
-        $user->email    = $request->email;
-        $user->login    = $request->login;
-        $user->password = $request->password;
 
-        $user->save();
+            $user = User::findOrFail($id);
+
+            if(Auth::user()->id == $id) 
+            {
+                $user->name     = $request->name;
+                $user->email    = $request->email;
+                $user->login    = $request->login;
+                $user->password = $request->password;
+
+                $user->save();
+            }
+
+            return redirect('PREFIX DA ROTA');
+            
         }
 
-        return redirect('PREFIX DA ROTA');
-    }
+
+
 
     /**
      * Remove the specified resource from storage.
