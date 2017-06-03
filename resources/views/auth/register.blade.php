@@ -20,25 +20,42 @@
         
             <div class="login-box animated fadeInDown">
                 <div class="login-body">
-                    <div class="login-title"><strong>Login</strong></div>
-                    <form action="index.html" class="form-horizontal" method="post">
+                    <div class="login-title"><strong>Faça seu cadastro</strong></div>
+                    <form action="{{ url('register') }}" class="form-horizontal" method="POST">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    
                     <div class="form-group">
                         <div class="col-md-12">
-                            <input type="text" class="form-control" placeholder="login"/>
+                            <input type="text" class="form-control" name="name" value="{{ old('name') }}" placeholder="Nome"/>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <input type="text" class="form-control" name="login" value="{{ old('login') }}" placeholder="login"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-md-12">
-                            <input type="password" class="form-control" placeholder="Password"/>
+                            <input type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="email"/>
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <input type="password" class="form-control" name="password" value="{{ old('password') }}" placeholder="Password"/>
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <div class="col-md-6">
-                            <a href="{{ url('cadastro') }}" class="btn btn-link btn-block">Ainda não possui conta?</a>
+                            <a href="{{ url('login') }}" class="btn btn-link btn-block">Já possui conta?</a>
                         </div>
+
                         <div class="col-md-6">
-                            <button class="btn btn-info btn-block">Login</button>
+                            <input type="submit" value="Cadastrar" class="btn btn-info btn-block">
                         </div>
+                        
                     </div>
                     </form>
                 </div>

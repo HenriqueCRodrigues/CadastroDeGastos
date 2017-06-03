@@ -11,24 +11,59 @@
 |
 */
 
+
+
+
+
+
+
+
+// Rotas de Autenticação
+Route::get('login', 'Auth\AuthController@getLogin');
+Route::post('login', 'Auth\AuthController@postLogin');
+Route::get('logout', 'Auth\AuthController@getLogout');
+
+// Rotas de Cadastro
+Route::get('cadastro', 'Auth\AuthController@getRegister');
+Route::post('register', 'Auth\AuthController@postRegister');
+
+
+
 Route::get('/', function () {
-    return view('welcome');
+    if(!Auth::check())
+        return redirect('login');
+
+    return redirect('usuario');
 });
-Route::get('/despesas', function () {
-    return view('carteira.despesa');
+
+
+
+Route::group(['prefix' => 'usuario', 'middleware' => 'auth'], function () {
+
+	Route::get('/',['as'=>'index', 'uses'=>'UserController@index']);
+
+	Route::get('despesas', ['as'=>'despesas', 'uses'=>'UserController@expenses']);
+	    //return view('carteira.despesa');
+
+	Route::get('receitas', ['as'=>'receitas', 'uses'=>'UserController@recipes']);
+	    //return view('carteira.receita');
+
+
+	Route::get('contato',['as'=>'contato', 'uses'=>'UserController@contacts']);
+	    //return view('carteira.contato');
+
+	Route::get('conta', ['as'=>'conta', 'uses'=>'UserController@accounts']);
+	    //return view('carteira.conta');
+
 });
-Route::get('/receitas', function () {
-    return view('carteira.receita');
-});
-Route::get('/cadastro', function () {
-    return view('user.register');
-});
-Route::get('/login', function () {
-    return view('user.login');
-});
-Route::get('/contato', function () {
-    return view('carteira.contato');
-});
-Route::get('/conta', function () {
-    return view('carteira.conta');
-});
+
+
+
+
+
+
+
+
+
+
+

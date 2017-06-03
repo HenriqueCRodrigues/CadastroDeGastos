@@ -54,7 +54,7 @@
                 <!-- START X-NAVIGATION -->
                 <ul class="x-navigation">
                     <li class="xn-logo">
-                        <a href="index.html">Carteira</a>
+                        <a href="{{route('index')}}">Carteira</a>
                         <a href="#" class="x-navigation-control"></a>
                     </li>
                     <li class="xn-profile">
@@ -77,10 +77,10 @@
                     </li>
                     <li class="xn-title">Navegação</li>
                     <li>
-                        <a href="{{ url('despesas') }}"><span class="fa fa-money"></span> <span class="xn-text">Despesas</span></a>
+                        <a href="{{ route('despesas') }}"><span class="fa fa-money"></span> <span class="xn-text">Despesas</span></a>
                     </li>
                     <li>
-                        <a href="{{ url('receitas') }}"><span class="fa fa-money"></span> <span class="xn-text">Receitas</span></a>
+                        <a href="{{ route('receitas') }}"><span class="fa fa-money"></span> <span class="xn-text">Receitas</span></a>
                     </li>
                     <li>
                         <a href="#"><span class="fa fa-bar-chart-o"></span> <span class="xn-text">Relatórios</span></a>
@@ -89,10 +89,10 @@
                         <a href="#"><span class="fa fa-table"></span> <span class="xn-text">Tabela </span></a>
                     </li>  
                     <li>
-                        <a href="{{ url('contato') }}"><span class="fa fa-users"></span> <span class="xn-text">Contatos </span></a>
+                        <a href="{{ route('contato') }}"><span class="fa fa-users"></span> <span class="xn-text">Contatos </span></a>
                     </li>
                     <li>
-                        <a href="{{ url('conta') }}"><span class="fa fa-bank"></span> <span class="xn-text">Conta Bancária </span></a>
+                        <a href="{{ route('conta') }}"><span class="fa fa-bank"></span> <span class="xn-text">Conta Bancária </span></a>
                     </li>  
                     
                 </ul>
@@ -112,7 +112,7 @@
                     <!-- END SEARCH -->
                     <!-- SIGN OUT -->
                     <li class="xn-icon-button pull-right">
-                        <a href="#" class="mb-control" data-box="#mb-signout"><span class="fa fa-sign-out"></span></a>                        
+                        <a href="{{ url('logout') }}" class="mb-control" data-box="#mb-signout"><span class="fa fa-sign-out"></span></a>                        
                     </li> 
                     <!-- END SIGN OUT -->
                     <!-- SALDO -->

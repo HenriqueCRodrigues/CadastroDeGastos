@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
+use App\Models\User;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -22,7 +22,9 @@ class AuthController extends Controller
     */
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
-
+    
+    
+    protected $redirectPath = '/';
     /**
      * Create a new authentication controller instance.
      *
@@ -41,13 +43,11 @@ class AuthController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, 
-            [
+        return Validator::make($data, [
             'name'                  => 'required|max:255',
-            'email'                 => 'required|email|max:100|unique:users',
             'login'                 => 'required|max:30|unique:users',
-            'password'              => 'required|confirmed|min:4',
-            'password_confirmation' => 'required|min:6',
+            'email'                 => 'required|email|max:100|unique:users',
+            'password'              => 'required|min:4',
             ],
             
 
@@ -65,14 +65,10 @@ class AuthController extends Controller
             'login.unique'                    => 'Não pode haver Logins Iguais, digite outro por favor.',
             
             'password.required'               => 'É obrigatório inserir a Senha',
-            'password.confirmed'              => 'O campo Senha esta com valor diferente do campo Confirmar Senha.',
             'passaword.min'                   => 'Digitar ao menos :min caracteres para a sua senha',
 
-            'password_confirmation.required'  => 'É obrigatório inserir a Confirmação de Senha.',
-            'password_confirmation.confirmed' => 'O campo Confirmar Senha esta com valor diferente do campo Senha.',
-            'passaword_confirmation.min'      => 'Digitar ao menos :min caracteres para a sua senha.',
             
-            ],
+            ]
 
 
             );
@@ -86,10 +82,11 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
+        
         return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'login' => $data['login'],
+            'name'     => $data['name'],
+            'login'    => $data['login'],
+            'email'    => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
     }

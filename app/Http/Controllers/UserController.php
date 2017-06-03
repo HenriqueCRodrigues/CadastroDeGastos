@@ -17,7 +17,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        return view('welcome');
     }
 
     /**
@@ -92,6 +92,27 @@ class UserController extends Controller
 
 
 
+
+    public function recipes()
+    {
+        return view('carteira.receita');
+    }
+
+
+    public function expenses()
+    {
+        return view('carteira.despesa');
+    }
+
+    public function contacts()
+    {
+        return view('carteira.contato');
+    }
+
+    public function accounts()
+    {
+        return view('carteira.conta');
+    }
 
     /**
      * Remove the specified resource from storage.
