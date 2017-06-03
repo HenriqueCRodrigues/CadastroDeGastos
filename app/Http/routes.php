@@ -45,16 +45,32 @@ Route::group(['prefix' => 'usuario', 'middleware' => 'auth'], function () {
 	Route::get('despesas', ['as'=>'despesas', 'uses'=>'UserController@expenses']);
 	    //return view('carteira.despesa');
 
-	Route::get('receitas', ['as'=>'receitas', 'uses'=>'UserController@recipes']);
-	    //return view('carteira.receita');
+
+		Route::group(['prefix'=>'contato'], function(){
+			Route::get('/',['as' => 'index_contato', 'uses'=>'ContactController@index']);
+			Route::post('salvar', ['as' => 'salvar_contato', 'uses' => 'ContactController@store']);
+			Route::get('remover/{id}', ['as' => 'remover_contato', 'uses' => 'ContactController@destroy']);
+
+		});
+	    
+	    Route::group(['prefix'=>'conta'], function(){
+
+	    	Route::get('/', ['as'=>'index_conta', 'uses'=>'AccountController@index']);
+	    	Route::post('salvar', ['as' => 'salvar_conta', 'uses' => 'AccountController@store']);
+			Route::get('remover/{id}', ['as' => 'remover_conta', 'uses' => 'AccountController@destroy']);
 
 
-	Route::get('contato',['as'=>'contato', 'uses'=>'UserController@contacts']);
-	    //return view('carteira.contato');
+	    });
+		
 
-	Route::get('conta', ['as'=>'conta', 'uses'=>'UserController@accounts']);
-	    //return view('carteira.conta');
+		Route::group(['prefix'=>'receitas'], function(){
 
+	    	Route::get('/', ['as'=>'index_receita', 'uses'=>'RecipeController@index']);
+	    	Route::post('salvar', ['as' => 'salvar_receita', 'uses' => 'RecipeController@store']);
+			Route::get('remover/{id}', ['as' => 'remover_receita', 'uses' => 'RecipeController@destroy']);
+
+
+	    });
 });
 
 

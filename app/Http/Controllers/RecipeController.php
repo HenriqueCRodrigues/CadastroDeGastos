@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Auth;
-use App\Models\User;
+use App\Models\Recipe;
+use App\Models\Account;
+use App\Models\Contact;
 use App\Http\Requests;
+use App\Http\Requests\RecipeRequest;
 use App\Http\Controllers\Controller;
 
-class UserController extends Controller
+class RecipeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,7 +21,16 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('welcome');
+        $id = Auth::user()->id;
+        
+        $receitas = Recipe::where('user_id', $id)->get();
+
+        $contas = Account::where('of_user', $id)->get();
+
+        $contatos = Contact::where('of_user', $id)->get();
+
+        return view('carteira.receita', compact('receitas', 'contas', 'contatos'));
+    
     }
 
     /**
@@ -37,9 +49,18 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RecipeRequest $request)
     {
-        //
+        Recipe::create([
+                    'name'          => $request->name,
+                    'date'          => $request->date,
+                    'value'         => $request->value,
+                    'account_id'    => $request->account_id,
+                    'user_id'       => Auth::user()->id,
+                    'contact_id'    => $request->contact_id,
+            ]);
+
+         return  redirect()->route('index_receita');
     }
 
     /**
@@ -61,7 +82,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        return view('PASTALYOUT.ARQUIVOLAYOUT');
+        //
     }
 
     /**
@@ -71,39 +92,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UserRequest $request, $id)
+    public function update(Request $request, $id)
     {
-
-
-            $user = User::findOrFail($id);
-
-            if(Auth::user()->id == $id) 
-            {
-                $user->name     = $request->name;
-                $user->email    = $request->email;
-                $user->login    = $request->login;
-                $user->password = $request->password;
-
-                $user->save();
-            }
-
-            return redirect('PREFIX DA ROTA');
-            
-        }
-
-
-
-
-    
-
-
-    public function expenses()
-    {
-        return view('carteira.despesa');
+        //
     }
-
-
-    
 
     /**
      * Remove the specified resource from storage.
@@ -113,13 +105,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::findOrFail($id);
-        
-        if (Auth::user()->id == $id) 
-        {
-            $user->delete();
-        }
+        $receita = Recipe::destroy($id);
 
-        return redirect('PAGINA INICIAL');
+        return  redirect()->route('index_receita');
     }
 }

@@ -66,8 +66,8 @@
                                 <img src="theme/assets/images/users/avatar.jpg" alt="John Doe"/>
                             </div>
                             <div class="profile-data">
-                                <div class="profile-data-name">Any</div><!-- criar cadastro de usuario-->
-                                <div class="profile-data-title">Desenvolvedora web</div>
+                                <div class="profile-data-name">{{Auth::user()->name}}</div><!-- criar cadastro de usuario-->
+                                <div class="profile-data-title"></div>
                             </div>
                             <div class="profile-controls">
                                 <a href="pages-profile.html" class="profile-control-left"><span class="fa fa-info"></span></a>
@@ -80,7 +80,7 @@
                         <a href="{{ route('despesas') }}"><span class="fa fa-money"></span> <span class="xn-text">Despesas</span></a>
                     </li>
                     <li>
-                        <a href="{{ route('receitas') }}"><span class="fa fa-money"></span> <span class="xn-text">Receitas</span></a>
+                        <a href="{{ route('index_receita') }}"><span class="fa fa-money"></span> <span class="xn-text">Receitas</span></a>
                     </li>
                     <li>
                         <a href="#"><span class="fa fa-bar-chart-o"></span> <span class="xn-text">Relatórios</span></a>
@@ -89,10 +89,10 @@
                         <a href="#"><span class="fa fa-table"></span> <span class="xn-text">Tabela </span></a>
                     </li>  
                     <li>
-                        <a href="{{ route('contato') }}"><span class="fa fa-users"></span> <span class="xn-text">Contatos </span></a>
+                        <a href="{{ route('index_contato') }}"><span class="fa fa-users"></span> <span class="xn-text">Contatos </span></a>
                     </li>
                     <li>
-                        <a href="{{ route('conta') }}"><span class="fa fa-bank"></span> <span class="xn-text">Conta Bancária </span></a>
+                        <a href="{{ route('index_conta') }}"><span class="fa fa-bank"></span> <span class="xn-text">Conta Bancária </span></a>
                     </li>  
                     
                 </ul>

@@ -5,23 +5,24 @@
 </div>
 </br></br>
 <div class="col-sm-12">
-	<form name="form">
+	<form method="POST" action="{{route('salvar_contato')}}">
+	<input type="hidden" name="_token" value="{{ csrf_token() }}">
 		<div class="col-md-2"></div>
 		<div class="col-md-8">
 			<div class="form-group">
-		        <label for="nome">Nome</label>
-		        <input type="text" class="form-control" name="nome" id="descricao" required>
+		        <label for="name">Nome</label>
+		        <input type="text" class="form-control" name="name" id="descricao" required>
 		    </div>
 		    <div class="form-group">
-		        <label for="nome">Telefone</label>
-		        <input type="text" class="form-control" name="tel" id="descricao">
+		        <label for="phone">Telefone</label>
+		        <input type="text" class="form-control" name="phone" id="descricao">
 		    </div>
 		    <div class="form-group">
-		        <label for="nome">E-mail</label>
+		        <label for="email">E-mail</label>
 		        <input type="text" class="form-control" name="email" id="descricao">
 		    </div>
-		    <button type="submit" class="btn btn-default">Submit
-        	</button>
+		    <input type="submit" value="Salvar Contato" class="btn btn-default">
+        	
 		</div>
 
 		
@@ -39,17 +40,19 @@
 	                </tr>
 	            </thead>
 	            <tbody>
+	            @foreach($contatos as $contato)
 	                <tr>
-	                    <td></td>
-	                    <td></td>
-	                    <td></td>
+	                    <td>{{$contato->name}}</td>
+	                    <td>{{$contato->phone}}</td>
+	                    <td>{{$contato->email}}</td>
 	                    <td>
 	                        <button class="btn btn-sm btn-warning glyphicon glyphicon-pencil"></button>
 	                    </td>
 	                    <td>
-	                        <button class="btn btn-sm btn-danger glyphicon glyphicon-remove"></button>
+	                        <a href="{{route('remover_contato', $contato->id)}}" class="btn btn-sm btn-danger glyphicon glyphicon-remove"></a>
 	                    </td>
 	                </tr>
+	              @endforeach
 	            </tbody>
 	        </table>
 	    </div>

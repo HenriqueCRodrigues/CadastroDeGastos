@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Auth;
-use App\Models\User;
+use App\Models\Contact;
 use App\Http\Requests;
+use App\Http\Requests\ContactRequest;
 use App\Http\Controllers\Controller;
 
-class UserController extends Controller
+class ContactController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,7 +19,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('welcome');
+        $id = Auth::user()->id;
+        
+        $contatos = Contact::where('of_user', $id)->get();
+
+        return view('carteira.contato', compact('contatos'));
     }
 
     /**
@@ -37,9 +42,17 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ContactRequest $request)
     {
-        //
+        Contact::create([
+                    'of_user' => Auth::user()->id,
+                    'name'  => $request->name,
+                    'phone' => $request->phone,
+                    'email' => $request->email,
+            ]);
+
+
+        return  redirect()->route('index_contato');
     }
 
     /**
@@ -61,7 +74,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        return view('PASTALYOUT.ARQUIVOLAYOUT');
+        //
     }
 
     /**
@@ -71,39 +84,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UserRequest $request, $id)
+    public function update(Request $request, $id)
     {
-
-
-            $user = User::findOrFail($id);
-
-            if(Auth::user()->id == $id) 
-            {
-                $user->name     = $request->name;
-                $user->email    = $request->email;
-                $user->login    = $request->login;
-                $user->password = $request->password;
-
-                $user->save();
-            }
-
-            return redirect('PREFIX DA ROTA');
-            
-        }
-
-
-
-
-    
-
-
-    public function expenses()
-    {
-        return view('carteira.despesa');
+        //
     }
-
-
-    
 
     /**
      * Remove the specified resource from storage.
@@ -113,13 +97,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::findOrFail($id);
-        
-        if (Auth::user()->id == $id) 
-        {
-            $user->delete();
-        }
+        $contato = Contact::destroy($id);
 
-        return redirect('PAGINA INICIAL');
+        return  redirect()->route('index_contato');
     }
 }

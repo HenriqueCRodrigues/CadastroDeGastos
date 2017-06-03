@@ -27,9 +27,6 @@ class CreateRecipesTable extends Migration
             $table->integer('contact_id')->unsigned();
             $table->foreign('contact_id')->references('id')->on('contacts');
 
-            $table->integer('relevance_id')->unsigned();
-            $table->foreign('relevance_id')->references('id')->on('relevances');
-
             $table->timestamps();
 
         });

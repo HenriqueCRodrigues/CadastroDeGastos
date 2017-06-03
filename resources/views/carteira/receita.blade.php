@@ -5,24 +5,26 @@
 </div>
 </br></br>
 <div class="col-sm-12">
-	<form name="form">
+	<form method="POST" action="{{route('salvar_receita')}}">
+	<input type="hidden" name="_token" value="{{ csrf_token() }}">
 		<div class="col-md-5">
 			<div class="form-group">
 		        <label for="nome">Descrição</label>
-		        <input type="text" class="form-control" name="descricao" id="descricao"
+		        <input type="text" class="form-control" name="name" id="name"
 		               placeholder="Ex: Formatei computador" required>
 		    </div>
 		    <label for="contaBancaria">Conta Bancária</label>
 		    <div class="form-group">
-		        <select class="form-control" name="contaBancaria">
-		            <option>Itaú</option>
-		            <option>Banco do Brasil</option>
+		        <select class="form-control" name="account_id">
+		            @foreach($contas as $conta)
+		            <option value="{{$conta->id}}">Banco: {{$conta->name_bank}} / Conta: {{$conta->typeAccount->name}}</option>
+		            @endforeach
 		        </select>
 		    </div>
 			
 		    <div class="input-group">
 		        <span class="input-group-addon">R$</span>
-		        <input type="number" min="0" class="form-control" name="valor" id="valor"
+		        <input type="number" min="0" class="form-control" name="value" id="value"
 		               placeholder="Valor" required>
 		        <span class="input-group-addon">,00</span>
 		    </div>
@@ -32,22 +34,20 @@
 		    <div class="form-group">
 		        <label for="contato">Recebido de:</label>
 		        <div class="form-group">
-		            <select class="form-control" name="contato">
-		                <option>Clayton</option>
-		                <option>Felipe</option>
-		                <option>Matheus</option>
-		                <option>Henrique</option>
+		            <select class="form-control" name="contact_id">
+		                @foreach($contatos as $contato)
+		            <option value="{{$contato->id}}">{{$contato->name}}</option>
+		            @endforeach
 		            </select>
 		        </div>
 		    </div>
 		    <div class="form-group">
 				<label class="col-md-3 control-label">Data</label>
 				<div class="form-group">
-	                <input type="text" class="form-control datepicker" value="2000-01-01">
+	                <input type="text" class="form-control datepicker" name="date" value="2000-01-01">
 		        </div>
 			</div>
-		    <button type="submit" class="btn btn-default">Submit
-        	</button>
+		    <input type="submit" value="Cadastrar Receita" class="btn btn-default">
 		</div>
 
 		
@@ -62,27 +62,26 @@
 	                    <th> Valor</th>	                    
 	                    <th> Recebido de:</th>
 	                    <th> Data</th>
-	                    <th> Fonte</th>
 	                    <th> Editar</th>
 	                    <th> Remover</th>
 	                </tr>
 	            </thead>
 	            <tbody>
+	            	@foreach($receitas as $receita)
 	                <tr>
-	                    <td></td>
-	                    <td></td>
-	                    <td></td>
-	                    <td></td>
-	                    <td></td>
-	                    <td></td>
-	                    <td></td>
+	                    <td>{{$receita->name}}</td>
+	                    <td>Banco: {{$receita->account->name_bank}} / Tipo: {{$receita->account->typeAccount->name}}</td>
+	                    <td>{{$receita->value}}</td>
+	                    <td>{{$receita->contact->name}}</td>
+	                    <td>{{$receita->date}}</td>
 	                    <td>
 	                        <button class="btn btn-sm btn-warning glyphicon glyphicon-pencil"></button>
 	                    </td>
 	                    <td>
-	                        <button class="btn btn-sm btn-danger glyphicon glyphicon-remove"></button>
+	                        <a href="{{route('remover_receita', $receita->id)}}" class="btn btn-sm btn-danger glyphicon glyphicon-remove"></a>
 	                    </td>
 	                </tr>
+	                @endforeach
 	            </tbody>
 	        </table>
 	    </div>

@@ -5,28 +5,28 @@
 </div>
 </br></br>
 <div class="col-sm-12">
-	<form name="form">
+	<form method="POST" action="{{route('salvar_conta')}}">
+	<input type="hidden" name="_token" value="{{ csrf_token() }}">
 		<div class="col-md-2"></div>
 		<div class="col-md-8">
 			<div class="form-group">
 		        <label for="nome">Nome do Banco</label>
-		        <input type="text" class="form-control" name="banco" id="descricao" required>
+		        <input type="text" class="form-control" name="name_bank" id="descricao" required>
 		    </div>
 		    <div class="form-group">
 		        <label for="nome">Número da conta</label>
-		        <input type="text" class="form-control" name="tel" id="descricao">
+		        <input type="text" class="form-control" name="number" id="descricao">
 		    </div>
 		    <div class="form-group">
 		        <label for="nome">Tipo</label>
 		        <div class="form-group">
-		            <select class="form-control" name="tipo">
-		                <option>Corrente</option>
-		                <option>Poupança</option>
+		            <select class="form-control" name="type_account">
+		                <option value="1">Corrente</option>
+		                <option value="2">Poupança</option>
 		            </select>
 		        </div>
 		    </div>
-		    <button type="submit" class="btn btn-default">Submit
-        	</button>
+		    <input type="submit" value="Cadastrar Conta" class="btn btn-default">
 		</div>
 
 		
@@ -44,17 +44,19 @@
 	                </tr>
 	            </thead>
 	            <tbody>
+	            	@foreach($contas as $conta)
 	                <tr>
-	                    <td></td>
-	                    <td></td>
-	                    <td></td>
+	                    <td>{{$conta->name_bank}}</td>
+	                    <td>{{$conta->number}}</td>
+	                    <td>{{$conta->typeAccount->name}}</td>
 	                    <td>
 	                        <button class="btn btn-sm btn-warning glyphicon glyphicon-pencil"></button>
 	                    </td>
 	                    <td>
-	                        <button class="btn btn-sm btn-danger glyphicon glyphicon-remove"></button>
+	                        <a href="{{route('remover_conta', $conta->id)}}" class="btn btn-sm btn-danger glyphicon glyphicon-remove"></a>
 	                    </td>
 	                </tr>
+	                @endforeach
 	            </tbody>
 	        </table>
 	    </div>
