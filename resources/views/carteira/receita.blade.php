@@ -35,7 +35,7 @@
 		        <label for="contato">Recebido de:</label>
 		        <div class="form-group">
 		            <select class="form-control" name="contact_id">
-		                @foreach($contatos as $contato)
+		            @foreach($contatos as $contato)
 		            <option value="{{$contato->id}}">{{$contato->name}}</option>
 		            @endforeach
 		            </select>
@@ -44,7 +44,7 @@
 		    <div class="form-group">
 				<label class="col-md-3 control-label">Data</label>
 				<div class="form-group">
-	                <input type="text" class="form-control datepicker" name="date" value="2000-01-01">
+	                <input type="text" class="form-control datepicker" name="date" value="2017-06-03">
 		        </div>
 			</div>
 		    <input type="submit" value="Cadastrar Receita" class="btn btn-default">

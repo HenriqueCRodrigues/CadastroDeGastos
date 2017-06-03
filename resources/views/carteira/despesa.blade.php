@@ -5,24 +5,26 @@
 </div>
 </br></br>
 <div class="col-sm-12">
-	<form name="form">
+	<form method="POST" action="{{route('salvar_despesa')}}">
+	<input type="hidden" name="_token" value="{{ csrf_token() }}">
 		<div class="col-md-5">
 			<div class="form-group">
 		        <label for="nome">Descrição</label>
-		        <input type="text" class="form-control" name="descricao" id="descricao"
+		        <input type="text" class="form-control" name="name" id="name"
 		               placeholder="Ex: Aluguel" required>
 		    </div>
 		    <label for="contaBancaria">Conta Bancária</label>
 		    <div class="form-group">
-		        <select class="form-control" name="contaBancaria">
-		            <option>Itaú</option>
-		            <option>Banco do Brasil</option>
+		        <select class="form-control" name="account_id">
+		            @foreach($contas as $conta)
+		            <option value="{{$conta->id}}">Banco: {{$conta->name_bank}} / Conta: {{$conta->typeAccount->name}}</option>
+		            @endforeach
 		        </select>
 		    </div>
 			
 		    <div class="input-group">
 		        <span class="input-group-addon">R$</span>
-		        <input type="number" min="0" class="form-control" name="valor" id="valor"
+		        <input type="number" min="0" class="form-control" name="value" id="value"
 		               placeholder="Valor" required>
 		        <span class="input-group-addon">,00</span>
 		    </div>
@@ -32,27 +34,21 @@
 		    <div class="form-group">
 		        <label for="contato">Pagar para:</label>
 		        <div class="form-group">
-		            <select class="form-control" name="contato">
-		                <option>Clayton</option>
-		                <option>Felipe</option>
-		                <option>Matheus</option>
-		                <option>Henrique</option>
+		            <select class="form-control" name="contact_id">
+		                @foreach($contatos as $contato)
+			            <option value="{{$contato->id}}">{{$contato->name}}</option>
+			            @endforeach
+		            </select>
 		            </select>
 		        </div>
 		    </div>
 		    <div class="form-group">
 				<label class="col-md-3 control-label">Data</label>
 				<div class="form-group">
-	                <input type="text" name="data" class="form-control datepicker" value="05-06-2017" data-date-format="dd-mm-yyyy">
+	                <input type="text" name="date" class="form-control datepicker" value="2017-06-03" data-date-format="dd-mm-yyyy">
 		        </div>
 			</div>
-			<label for="contaBancaria">Relevância</label>
-		    <div class="form-group">
-		        <select class="form-control" name="relevancia">
-		            <option>Itaú</option>
-		            <option>Banco do Brasil</option>
-		        </select>
-		    </div>
+			
 		    <button type="submit" class="btn btn-default">Submit
         	</button>
 		</div>
@@ -69,26 +65,27 @@
 	                    <th> Valor</th>	                    
 	                    <th> Pago para:</th>
 	                    <th> Data</th>
-	                    <th> Relevância</th>
 	                    <th> Editar</th>
 	                    <th> Remover</th>
 	                </tr>
 	            </thead>
 	            <tbody>
+	            	@foreach($despesas as $despesa)
 	                <tr>
-	                    <td></td>
-	                    <td></td>
-	                    <td></td>
-	                    <td></td>
-	                    <td></td>
-	                    <td></td>
+	                    <td>{{$despesa->name}}</td>
+	                    <td>Banco: {{$despesa->account->name_bank}} / Tipo: {{$despesa->account->typeAccount->name}}</td>
+	                    <td>{{$despesa->value}}</td>
+	                    <td>{{$despesa->account->name}}</td>
+	                    <td>{{$despesa->date}}</td>
+	     
 	                    <td>
 	                        <button class="btn btn-sm btn-warning glyphicon glyphicon-pencil"></button>
 	                    </td>
 	                    <td>
-	                        <button class="btn btn-sm btn-danger glyphicon glyphicon-remove"></button>
+	                        <a href="{{route('remover_despesa', $despesa->id)}}" class="btn btn-sm btn-danger glyphicon glyphicon-remove"></a>
 	                    </td>
 	                </tr>
+	                @endforeach
 	            </tbody>
 	        </table>
 	    </div>

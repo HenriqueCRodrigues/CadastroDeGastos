@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Recipe extends Model
+class Expense extends Model
 {
-    protected $table = 'recipes';
+   	protected $table = 'expenses';
 
     protected $fillable = ['name', 'date', 'account_id', 'user_id', 'value', 'contact_id'];
 
@@ -19,5 +19,4 @@ class Recipe extends Model
     {
       return $this->belongsTo(Contact::class); 
     }
- 
 }

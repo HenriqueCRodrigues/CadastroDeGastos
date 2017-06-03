@@ -94,17 +94,6 @@ class UserController extends Controller
 
 
 
-    
-
-
-    public function expenses()
-    {
-        return view('carteira.despesa');
-    }
-
-
-    
-
     /**
      * Remove the specified resource from storage.
      *

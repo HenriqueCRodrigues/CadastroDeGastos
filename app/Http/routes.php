@@ -33,18 +33,14 @@ Route::get('/', function () {
     if(!Auth::check())
         return redirect('login');
 
-    return redirect('usuario');
+    return redirect()->route('index');
 });
 
 
 
 Route::group(['prefix' => 'usuario', 'middleware' => 'auth'], function () {
 
-	Route::get('/',['as'=>'index', 'uses'=>'UserController@index']);
-
-	Route::get('despesas', ['as'=>'despesas', 'uses'=>'UserController@expenses']);
-	    //return view('carteira.despesa');
-
+		Route::get('/',['as'=>'index', 'uses'=>'UserController@index']);
 
 		Route::group(['prefix'=>'contato'], function(){
 			Route::get('/',['as' => 'index_contato', 'uses'=>'ContactController@index']);
@@ -68,6 +64,16 @@ Route::group(['prefix' => 'usuario', 'middleware' => 'auth'], function () {
 	    	Route::get('/', ['as'=>'index_receita', 'uses'=>'RecipeController@index']);
 	    	Route::post('salvar', ['as' => 'salvar_receita', 'uses' => 'RecipeController@store']);
 			Route::get('remover/{id}', ['as' => 'remover_receita', 'uses' => 'RecipeController@destroy']);
+
+
+	    });
+
+
+	    Route::group(['prefix'=>'despesas'], function(){
+
+	    	Route::get('/', ['as'=>'index_despesa', 'uses'=>'ExpenseController@index']);
+	    	Route::post('salvar', ['as' => 'salvar_despesa', 'uses' => 'ExpenseController@store']);
+			Route::get('remover/{id}', ['as' => 'remover_despesa', 'uses' => 'ExpenseController@destroy']);
 
 
 	    });

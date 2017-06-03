@@ -20,7 +20,7 @@
 		    <div class="form-group">
 		        <label for="nome">Tipo</label>
 		        <div class="form-group">
-		            <select class="form-control" name="type_account">
+		            <select class="form-control" name="type_account_id">
 		                <option value="1">Corrente</option>
 		                <option value="2">Poupança</option>
 		            </select>

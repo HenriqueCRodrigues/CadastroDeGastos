@@ -77,7 +77,7 @@
                     </li>
                     <li class="xn-title">Navegação</li>
                     <li>
-                        <a href="{{ route('despesas') }}"><span class="fa fa-money"></span> <span class="xn-text">Despesas</span></a>
+                        <a href="{{ route('index_despesa') }}"><span class="fa fa-money"></span> <span class="xn-text">Despesas</span></a>
                     </li>
                     <li>
                         <a href="{{ route('index_receita') }}"><span class="fa fa-money"></span> <span class="xn-text">Receitas</span></a>

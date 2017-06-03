@@ -24,9 +24,9 @@ class AccountRequest extends Request
      public function rules()
     {
         return [
-            'name_bank'                  => 'required|max:255',
-            'number'                     => 'required|max:20',
-            'type_account'               => 'required|numeric|max:1',
+            'name_bank'       => 'required|max:255',
+            'number'          => 'required|max:20',
+            'type_account_id' => 'required|numeric',
 
         ];
     }
@@ -42,9 +42,8 @@ class AccountRequest extends Request
             'number.required'       => 'É obrigatório inserir o numero da conta',
             'number.max'            => 'O telefone deve ter no maximo :max caracteres',
             
-            'type_account.required' => 'É obrigatório inserir o Tipo de Conta.',
-            'type_account.max'      => 'O tipo de conta só pode ser Corrente ou Poupança',
-            'type_account.numeric'  => 'Houve algum erro, favor selecionar novamente o tipo de conta',
+            'type_account_id.required' => 'É obrigatório inserir o Tipo de Conta.',
+            'type_account_id.numeric'  => 'Houve algum erro, favor selecionar novamente o tipo de conta',
 
         ];
 

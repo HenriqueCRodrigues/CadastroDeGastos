@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Auth;
+use App\Models\Expense;
 use App\Models\Account;
+use App\Models\Contact;
 use App\Http\Requests;
-use App\Http\Requests\AccountRequest;
 use App\Http\Controllers\Controller;
 
-class AccountController extends Controller
+class ExpenseController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,10 +22,13 @@ class AccountController extends Controller
     {
         $id = Auth::user()->id;
         
+        $despesas = Expense::where('user_id', $id)->get();
+
         $contas = Account::where('of_user', $id)->get();
 
-        return view('carteira.conta', compact('contas'));
-    
+        $contatos = Contact::where('of_user', $id)->get();
+
+        return view('carteira.despesa', compact('despesas', 'contas', 'contatos'));
     }
 
     /**
@@ -43,17 +47,18 @@ class AccountController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(AccountRequest $request)
-    {   
-        Account::create([
-                    'of_user'         => Auth::user()->id,
-                    'name_bank'       => $request->name_bank,
-                    'number'          => $request->number,
-                    'type_account_id' => $request->type_account_id,
+    public function store(Request $request)
+    {
+        Expense::create([
+                    'name'          => $request->name,
+                    'date'          => $request->date,
+                    'value'         => $request->value,
+                    'account_id'    => $request->account_id,
+                    'user_id'       => Auth::user()->id,
+                    'contact_id'    => $request->contact_id,
             ]);
 
-
-        return  redirect()->route('index_conta');
+         return  redirect()->route('index_despesa');
     }
 
     /**
@@ -98,8 +103,8 @@ class AccountController extends Controller
      */
     public function destroy($id)
     {
-        $conta = Account::destroy($id);
+        $despesa = Expense::destroy($id);
 
-        return  redirect()->route('index_conta');
+        return  redirect()->route('index_despesa');
     }
 }
