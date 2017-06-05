@@ -74,7 +74,13 @@ class ContactController extends Controller
      */
     public function edit($id)
     {
-        //
+        $idU = Auth::user()->id;
+        
+        $contatos = Contact::where('of_user', $idU)->get();
+
+        $contato = Contact::findOrFail($id);
+
+        return view('carteira.contato', compact('contatos','contato'));
     }
 
     /**
@@ -86,7 +92,16 @@ class ContactController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+            $contact        = Contact::findOrFail($id);
+            $contact->name  = $request->name;
+            $contact->phone = $request->phone;
+            $contact->email = $request->email;
+            
+            $contact->save();
+    
+
+
+        return  redirect()->route('index_contato');
     }
 
     /**

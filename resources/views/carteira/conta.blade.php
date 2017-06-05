@@ -5,28 +5,30 @@
 </div>
 </br></br>
 <div class="col-sm-12">
-	<form method="POST" action="{{route('salvar_conta')}}">
+	<form method="POST" action="{{strpos(Request::url(), 'editar') ? route('atualizar_conta', $conta->id) : route('salvar_conta')}}">
 	<input type="hidden" name="_token" value="{{ csrf_token() }}">
 		<div class="col-md-2"></div>
 		<div class="col-md-8">
 			<div class="form-group">
 		        <label for="nome">Nome do Banco</label>
-		        <input type="text" class="form-control" name="name_bank" id="descricao" required>
+		        <input type="text" class="form-control" name="name_bank" value="{{strpos(Request::url(), 'editar') ? $conta->name_bank : ''}}" id="descricao" required>
 		    </div>
 		    <div class="form-group">
 		        <label for="nome">Número da conta</label>
-		        <input type="text" class="form-control" name="number" id="descricao">
+		        <input type="text" class="form-control" name="number" value="{{strpos(Request::url(), 'editar') ? $conta->number : ''}}" id="descricao">
 		    </div>
 		    <div class="form-group">
 		        <label for="nome">Tipo</label>
 		        <div class="form-group">
 		            <select class="form-control" name="type_account_id">
+		                @if(strpos(Request::url(),'editar'))
 		                <option value="1">Corrente</option>
-		                <option value="2">Poupança</option>
+		                <option value="2" @if($tc == 2) selected @endif>Poupança</option>
+		                @endif
 		            </select>
 		        </div>
 		    </div>
-		    <input type="submit" value="Cadastrar Conta" class="btn btn-default">
+		    <input type="submit" value="{{strpos(Request::url(), 'editar') ? 'Editar Conta' : 'Cadastrar Conta'}}" class="btn btn-default">
 		</div>
 
 		
@@ -50,7 +52,7 @@
 	                    <td>{{$conta->number}}</td>
 	                    <td>{{$conta->typeAccount->name}}</td>
 	                    <td>
-	                        <button class="btn btn-sm btn-warning glyphicon glyphicon-pencil"></button>
+	                        <a href="{{route('editar_conta', $conta->id)}}" class="btn btn-sm btn-warning glyphicon glyphicon-pencil"></a>
 	                    </td>
 	                    <td>
 	                        <a href="{{route('remover_conta', $conta->id)}}" class="btn btn-sm btn-danger glyphicon glyphicon-remove"></a>

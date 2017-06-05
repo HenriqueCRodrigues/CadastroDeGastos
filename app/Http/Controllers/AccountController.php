@@ -75,7 +75,13 @@ class AccountController extends Controller
      */
     public function edit($id)
     {
-        //
+        $idU = Auth::user()->id;
+        
+        $contas = Account::where('of_user', $idU)->get();
+
+        $conta = Account::findOrFail($id);
+        $tc = $conta->type_account_id;
+        return view('carteira.conta', compact('contas','conta', 'tc'));
     }
 
     /**
@@ -85,9 +91,19 @@ class AccountController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(AccountRequest $request, $id)
     {
-        //
+
+            $account                  = Account::findOrFail($id);
+            $account->name_bank       = $request->name_bank;
+            $account->number          = $request->number;
+            $account->type_account_id = $request->type_account_id;
+            
+            $account->save();
+    
+
+
+        return  redirect()->route('index_conta');
     }
 
     /**

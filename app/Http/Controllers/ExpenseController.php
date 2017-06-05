@@ -9,6 +9,7 @@ use App\Models\Expense;
 use App\Models\Account;
 use App\Models\Contact;
 use App\Http\Requests;
+use App\Http\Requests\ExpenseRequest;
 use App\Http\Controllers\Controller;
 
 class ExpenseController extends Controller
@@ -80,7 +81,17 @@ class ExpenseController extends Controller
      */
     public function edit($id)
     {
-        //
+        $idU = Auth::user()->id;
+        
+        $despesas = Expense::where('user_id', $idU)->get();
+
+        $contas = Account::where('of_user', $idU)->get();
+
+        $contatos = Contact::where('of_user', $idU)->get();
+
+        $despesa = Expense::findOrFail($id);
+
+        return view('carteira.despesa', compact('despesas', 'contas', 'contatos', 'despesa'));
     }
 
     /**
@@ -90,9 +101,18 @@ class ExpenseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ExpenseRequest $request, $id)
     {
-        //
+                    $receita             = Expense::findOrFail($id);
+                    $receita->name       = $request->name;
+                    $receita->date       = $request->date;
+                    $receita->value      = $request->value;
+                    $receita->account_id = $request->account_id;
+                    $receita->contact_id = $request->contact_id;
+                    
+                    $receita->save();
+
+         return  redirect()->route('index_despesa');
     }
 
     /**

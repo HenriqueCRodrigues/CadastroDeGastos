@@ -82,7 +82,17 @@ class RecipeController extends Controller
      */
     public function edit($id)
     {
-        //
+        $idU = Auth::user()->id;
+        
+        $receitas = Recipe::where('user_id', $idU)->get();
+
+        $contas = Account::where('of_user', $idU)->get();
+
+        $contatos = Contact::where('of_user', $idU)->get();
+
+        $receita = Recipe::findOrFail($id);
+
+        return view('carteira.receita', compact('receitas', 'contas', 'contatos', 'receita'));
     }
 
     /**
@@ -92,9 +102,18 @@ class RecipeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(RecipeRequest $request, $id)
     {
-        //
+                    $receita = Recipe::findOrFail($id);
+                    $receita->name          = $request->name;
+                    $receita->date          = $request->date;
+                    $receita->value         = $request->value;
+                    $receita->account_id    = $request->account_id;
+                    $receita->contact_id    = $request->contact_id;
+                    
+                    $receita->save();
+
+         return  redirect()->route('index_receita');
     }
 
     /**
