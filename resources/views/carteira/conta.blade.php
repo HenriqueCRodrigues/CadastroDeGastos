@@ -24,6 +24,9 @@
 		                @if(strpos(Request::url(),'editar'))
 		                <option value="1">Corrente</option>
 		                <option value="2" @if($tc == 2) selected @endif>Poupança</option>
+		                @else
+		                 <option value="1">Corrente</option>
+		                <option value="2">Poupança</option>
 		                @endif
 		            </select>
 		        </div>
