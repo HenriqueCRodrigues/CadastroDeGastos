@@ -14,6 +14,10 @@ class CreateAccountsTable extends Migration
     {
          Schema::create('accounts', function (Blueprint $table) {
             $table->increments('id');
+
+            $table->integer('of_user')->unsigned();
+            $table->foreign('of_user')->references('id')->on('users');
+
             $table->string('name_bank');
             $table->string('number', 25);
 
