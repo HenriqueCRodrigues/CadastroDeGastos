@@ -85,6 +85,16 @@ Route::group(['prefix' => 'usuario', 'middleware' => 'auth'], function () {
 
 
 	    });
+
+
+	    // Images Route...
+	    Route::get('/images/{folder}/{image?}/{size?}', ['as' => 'images', 'uses' => function($folder, $image, $size) {
+	        $path = storage_path() . '/app/' . $folder . '/' . $image;
+	        $img = Image::make($path)->resize(null, $size, function ($constraint) {
+	            $constraint->aspectRatio();
+	        });
+	        return $img->response();
+	    }]);
 });
 
 
