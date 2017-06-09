@@ -26,7 +26,6 @@
 		        <span class="input-group-addon">R$</span>
 		        <input type="number" min="0" class="form-control" name="value" id="value"
 		               placeholder="Valor" required>
-		        <span class="input-group-addon">,00</span>
 		    </div>
 		</div>
 		<div class="col-md-1"></div>
