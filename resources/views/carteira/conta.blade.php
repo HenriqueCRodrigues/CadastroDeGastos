@@ -13,6 +13,12 @@
 		        <label for="nome">Nome do Banco</label>
 		        <input type="text" class="form-control" name="name_bank" value="{{strpos(Request::url(), 'editar') ? $conta->name_bank : ''}}" id="descricao" required>
 		    </div>
+
+		    <div class="form-group">
+		        <label for="nome">Agência</label>
+		        <input type="text" class="form-control" name="agency" value="{{strpos(Request::url(), 'editar') ? $conta->number : ''}}" id="descricao">
+		    </div>
+
 		    <div class="form-group">
 		        <label for="nome">Número da conta</label>
 		        <input type="text" class="form-control" name="number" value="{{strpos(Request::url(), 'editar') ? $conta->number : ''}}" id="descricao">
@@ -24,6 +30,9 @@
 		                @if(strpos(Request::url(),'editar'))
 		                <option value="1">Corrente</option>
 		                <option value="2" @if($tc == 2) selected @endif>Poupança</option>
+		                @else
+		                 <option value="1">Corrente</option>
+		                <option value="2">Poupança</option>
 		                @endif
 		            </select>
 		        </div>
@@ -39,6 +48,7 @@
 	            <thead>
 	                <tr>
 	                    <th> Banco</th>
+	                    <th> Agência</th>
 	                    <th> Número</th>
 	                    <th> Tipo</th>
 	                    <th> Editar</th>
@@ -49,6 +59,7 @@
 	            	@foreach($contas as $conta)
 	                <tr>
 	                    <td>{{$conta->name_bank}}</td>
+	                    <td>{{$conta->agency}}</td>
 	                    <td>{{$conta->number}}</td>
 	                    <td>{{$conta->typeAccount->name}}</td>
 	                    <td>

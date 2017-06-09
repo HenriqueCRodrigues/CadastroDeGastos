@@ -61,11 +61,11 @@
                     </li>
                     <li class="xn-profile">
                         <a href="#" class="profile-mini">
-                            <img src="theme/assets/images/users/avatar.jpg" alt="John Doe"/>
+                            <img src="{{ Auth::user()->photo != NULL ? route('images', [Auth::user()->photo, 170]) : ''}}" alt="John Doe"/>
                         </a>
                         <div class="profile">
                             <div class="profile-image">
-                                <img src="theme/assets/images/users/avatar.jpg" alt="John Doe"/>
+                                <img src="{{ Auth::user()->photo != NULL ? route('images', [Auth::user()->photo, 170]) : 'theme/assets/images/users/userdefault.png'}}" alt="John Doe"/>
                             </div>
                             <div class="profile-data">
                                 <div class="profile-data-name">{{Auth::user()->name}}</div><!-- criar cadastro de usuario-->
@@ -85,11 +85,9 @@
                         <a href="{{ route('index_receita') }}"><span class="fa fa-money"></span> <span class="xn-text">Receitas</span></a>
                     </li>
                     <li>
-                        <a href="#"><span class="fa fa-bar-chart-o"></span> <span class="xn-text">Relatórios</span></a>
+                        <a href="{{ url('chartjs') }}"><span class="fa fa-bar-chart-o"></span> <span class="xn-text">Relatórios</span></a>
                     </li> 
-                    <li>
-                        <a href="#"><span class="fa fa-table"></span> <span class="xn-text">Tabela </span></a>
-                    </li>  
+                    
                     <li>
                         <a href="{{ route('index_contato') }}"><span class="fa fa-users"></span> <span class="xn-text">Contatos </span></a>
                     </li>

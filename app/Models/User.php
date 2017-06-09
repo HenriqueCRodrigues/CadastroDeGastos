@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\ImageUploadTrait;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -14,6 +15,7 @@ class User extends Model implements AuthenticatableContract,
                                     AuthorizableContract,
                                     CanResetPasswordContract
 {
+    use ImageUploadTrait;
     use Authenticatable, Authorizable, CanResetPassword;
 
     /**
@@ -28,7 +30,7 @@ class User extends Model implements AuthenticatableContract,
      *
      * @var array
      */
-    protected $fillable = ['name', 'login', 'email', 'password'];
+    protected $fillable = ['name', 'login', 'email', 'password', 'photo'];
 
     /**
      * The attributes excluded from the model's JSON form.
