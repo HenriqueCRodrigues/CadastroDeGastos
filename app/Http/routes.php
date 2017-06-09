@@ -14,8 +14,8 @@
 
 
 
-
-
+//charts
+Route::get('chartjs', 'ChartController@index');
 
 
 // Rotas de Autenticação
