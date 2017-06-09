@@ -9,7 +9,8 @@
 
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" type="text/css" id="theme" href="{{ URL::asset('theme/css/theme-default.css') }}"/>
-
+    <!-- CHARTS-->
+    {!! Charts::assets() !!}
     <!-- THEME -->
     <!-- START PLUGINS --> 
     
@@ -40,6 +41,7 @@
             
     <!-- END TEMPLATE -->
 
+    
 </head>
 
 <body>
