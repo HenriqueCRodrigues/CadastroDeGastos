@@ -15,7 +15,12 @@
 
 
 //charts
-Route::get('chartjs', 'ChartController@index');
+Route::get('economias', function (){
+	return view('carteira.economias');
+});
+
+//Rota de economias
+Route::get('relatorios', 'ChartController@index');
 
 
 // Rotas de Autenticação

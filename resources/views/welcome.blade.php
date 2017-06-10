@@ -79,21 +79,23 @@
                     </li>
                     <li class="xn-title">Navegação</li>
                     <li>
-                        <a href="{{ route('index_despesa') }}"><span class="fa fa-money"></span> <span class="xn-text">Despesas</span></a>
+                        <a href="{{ route('index_despesa') }}"><span class="fa fa-shopping-cart"></span> <span class="xn-text">Despesas</span></a>
                     </li>
                     <li>
                         <a href="{{ route('index_receita') }}"><span class="fa fa-money"></span> <span class="xn-text">Receitas</span></a>
                     </li>
-                    <li>
-                        <a href="{{ url('chartjs') }}"><span class="fa fa-bar-chart-o"></span> <span class="xn-text">Relatórios</span></a>
-                    </li> 
-                    
                     <li>
                         <a href="{{ route('index_contato') }}"><span class="fa fa-users"></span> <span class="xn-text">Contatos </span></a>
                     </li>
                     <li>
                         <a href="{{ route('index_conta') }}"><span class="fa fa-bank"></span> <span class="xn-text">Conta Bancária </span></a>
                     </li>  
+                    <li>
+                        <a href="{{ url('relatorios') }}"><span class="fa fa-bar-chart-o"></span> <span class="xn-text">Relatórios</span></a>
+                    </li> 
+                    <li>
+                        <a href="{{ url('economias') }}"><span class="fa fa fa-dollar"></span> <span class="xn-text">Metas de economia</span></a>
+                    </li> 
                     
                 </ul>
                 <!-- END X-NAVIGATION -->
