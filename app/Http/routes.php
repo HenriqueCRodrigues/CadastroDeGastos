@@ -22,6 +22,8 @@ Route::get('economias', function (){
 //Rota de economias
 Route::get('relatorios', 'ChartController@index');
 
+//pagina principal
+Route::get('/dashboard', 'HomeController@index');
 
 // Rotas de Autenticação
 Route::get('login', 'Auth\AuthController@getLogin');

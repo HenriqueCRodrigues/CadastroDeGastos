@@ -24,6 +24,19 @@
     <script type="text/javascript" src="{{ URL::asset('theme/js/plugins/icheck/icheck.min.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('theme/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js') }}"></script>
 
+
+
+    
+    <script type="text/javascript" src="{{ URL::asset('theme/js/plugins/scrolltotop/scrolltopcontrol.js') }}"></script>
+
+    <script type="text/javascript" src="{{ URL::asset('theme/js/plugins/morris/raphael-min.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('theme/js/plugins/morris/morris.min.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('theme/js/plugins/rickshaw/d3.v3.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('theme/js/plugins/rickshaw/rickshaw.min.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('theme/js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('theme/js/plugins/bootstrap/bootstrap-datepicker.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('theme/js/plugins/owl/owl.carousel.min.js') }}"></script>
+    
     <script type="text/javascript" src="{{ URL::asset('theme/js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('theme/js/plugins/tableexport/tableExport.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('theme/js/plugins/tableexport/jquery.base64.js') }}"></script>
@@ -37,7 +50,8 @@
     <!-- START TEMPLATE -->
     <script type="text/javascript" src="{{ URL::asset('theme/js/settings.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('theme/js/plugins.js') }}"></script>
-    <script type="text/javascript" src="{{ URL::asset('theme/js/actions.js') }}"></script> 
+    <script type="text/javascript" src="{{ URL::asset('theme/js/actions.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('theme/js/demo_dashboard.js') }}"></script>
             
     <!-- END TEMPLATE -->
 
@@ -78,6 +92,9 @@
                         </div>                                                                        
                     </li>
                     <li class="xn-title">Navegação</li>
+                    <li>
+                        <a href="{{ url('/dashboard') }}"><span class="fa fa fa-desktop"></span> <span class="xn-text">Dashboard</span></a>
+                    </li> 
                     <li>
                         <a href="{{ route('index_despesa') }}"><span class="fa fa-shopping-cart"></span> <span class="xn-text">Despesas</span></a>
                     </li>
