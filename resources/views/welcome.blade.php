@@ -75,11 +75,11 @@
                     </li>
                     <li class="xn-profile">
                         <a href="#" class="profile-mini">
-                            <img src="{{ Auth::user()->photo != NULL ? route('images', [Auth::user()->photo, 170]) : ''}}" alt="John Doe"/>
+                            <img src="" alt="John Doe"/>
                         </a>
                         <div class="profile">
                             <div class="profile-image">
-                                <img src="{{ Auth::user()->photo != NULL ? route('images', [Auth::user()->photo, 170]) : 'theme/assets/images/users/userdefault.png'}}" alt="John Doe"/>
+                                <img src="{{ Auth::user()->photo != NULL ? route('images', [Auth::user()->photo, 170]) : '../theme/assets/images/users/userdefault.png'}}" alt="John Doe"/>
                             </div>
                             <div class="profile-data">
                                 <div class="profile-data-name">{{Auth::user()->name}}</div><!-- criar cadastro de usuario-->

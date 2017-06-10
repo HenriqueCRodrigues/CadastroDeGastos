@@ -16,7 +16,7 @@ class CreateRecipesTable extends Migration
             $table->increments('id');
             $table->string('name', 100);
             $table->date('date');
-            $table->decimal('value', 5, 2);
+            $table->decimal('value', 15, 2);
 
             $table->integer('account_id')->unsigned();
             $table->foreign('account_id')->references('id')->on('accounts');
