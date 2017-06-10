@@ -14,16 +14,9 @@
 
 
 
-//charts
-Route::get('economias', function (){
-	return view('carteira.economias');
-});
 
-//Rota de economias
-Route::get('relatorios', 'ChartController@index');
 
-//pagina principal
-Route::get('/dashboard', 'HomeController@index');
+
 
 // Rotas de Autenticação
 Route::get('login', 'Auth\AuthController@getLogin');
@@ -47,7 +40,8 @@ Route::get('/', function () {
 
 Route::group(['prefix' => 'usuario', 'middleware' => 'auth'], function () {
 
-		Route::get('/',['as'=>'index', 'uses'=>'UserController@index']);
+		//pagina principal
+		Route::get('dashboard', ['as'=>'index', 'uses'=>'HomeController@index']);
 
 		Route::group(['prefix'=>'contato'], function(){
 			Route::get('/',['as' => 'index_contato', 'uses'=>'ContactController@index']);
@@ -92,6 +86,16 @@ Route::group(['prefix' => 'usuario', 'middleware' => 'auth'], function () {
 
 
 	    });
+
+
+	    //Rota de economias
+		Route::get('relatorios', ['as'=>'index_relatorio', 'uses' => 'ChartController@index']);
+
+		
+		//charts
+		Route::get('economias', ['as'=>'index_economia',  function (){
+		return view('carteira.economias');
+		}]);
 
 
 	    // Images Route...

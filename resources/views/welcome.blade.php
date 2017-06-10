@@ -93,7 +93,7 @@
                     </li>
                     <li class="xn-title">Navegação</li>
                     <li>
-                        <a href="{{ url('/dashboard') }}"><span class="fa fa fa-desktop"></span> <span class="xn-text">Dashboard</span></a>
+                        <a href="{{ route('index') }}"><span class="fa fa fa-desktop"></span> <span class="xn-text">Dashboard</span></a>
                     </li> 
                     <li>
                         <a href="{{ route('index_despesa') }}"><span class="fa fa-shopping-cart"></span> <span class="xn-text">Despesas</span></a>
@@ -108,10 +108,10 @@
                         <a href="{{ route('index_conta') }}"><span class="fa fa-bank"></span> <span class="xn-text">Conta Bancária </span></a>
                     </li>  
                     <li>
-                        <a href="{{ url('relatorios') }}"><span class="fa fa-bar-chart-o"></span> <span class="xn-text">Relatórios</span></a>
+                        <a href="{{ route('index_relatorio') }}"><span class="fa fa-bar-chart-o"></span> <span class="xn-text">Relatórios</span></a>
                     </li> 
                     <li>
-                        <a href="{{ url('economias') }}"><span class="fa fa fa-dollar"></span> <span class="xn-text">Metas de economia</span></a>
+                        <a href="{{ route('index_economia') }}"><span class="fa fa fa-dollar"></span> <span class="xn-text">Metas de economia</span></a>
                     </li> 
                     
                 </ul>
@@ -137,7 +137,8 @@
                     <!-- SALDO -->
                     <li class="pull-right">
                         <a>
-                            <strong>Saldo: </strong>
+                            <strong>Saldo: <strong style="{!!(Session::get('user.saldo') < 0) ? 'color:red' : '' !!}">R$ {{number_format(Session::get('user.saldo'),2,',','.')}}</strong></strong>
+                            
                             <strong><strong>
                         </a>         
                     </li>

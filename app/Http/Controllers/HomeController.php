@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 use Auth;
+use Session;
 use App\Models\Expense;
 use App\Models\Recipe;
 use App\Models\Account;
@@ -17,10 +18,14 @@ class HomeController extends Controller
 {
     public function index()
     {
+      $totalExpenses = 0;
+      $totalRecipes = 0;
+
       $totalExpenses = DB::table('expenses')->sum('value');
       $totalRecipes = DB::table('recipes')->sum('value');
 
-  	   
+      Session::put('user.saldo', $totalRecipes-$totalExpenses);
+
       $id = Auth::user()->id;
       
       $despesas = Expense::where('user_id', $id)->get();

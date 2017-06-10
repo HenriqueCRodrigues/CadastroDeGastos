@@ -71,7 +71,7 @@
                             <td><strong>{{$despesa->name}}</strong></td>
                             <td>Banco: {{$despesa->account->name_bank}} / Tipo: {{$despesa->account->typeAccount->name}}</td>
                             <td>{{$despesa->value}}</td>
-                            <td>{{$despesa->account->name}}</td>
+                            <td>{{$despesa->contact->name}}</td>
                             <td>{{$despesa->date}}</td>
                         </tr>
                     @endforeach
