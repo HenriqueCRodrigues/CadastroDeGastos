@@ -79,13 +79,34 @@ class UserController extends Controller
 
             if(Auth::user()->id == $id) 
             {
-                $user->name     = $request->name;
-                $user->email    = $request->email;
-                $user->login    = $request->login;
-                $user->password = $request->password;
+                $user->fill($request->except('photo'));
+
+                if(isset($request['photo'])) 
+                {   
+                    if($user->photo != NULL) 
+                    {
+                        unlink(route('images', [$user->photo]));
+                    }
+
+                    $photo = $request->file('photo');
+                    $user->photo = $user->uploadImage($photo, 'users/');
+                }
 
                 $user->save();
             }
+
+                
+
+
+
+
+
+
+
+
+
+
+
 
             return redirect('PREFIX DA ROTA');
             

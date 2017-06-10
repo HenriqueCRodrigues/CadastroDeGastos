@@ -19,6 +19,7 @@ class CreateAccountsTable extends Migration
             $table->foreign('of_user')->references('id')->on('users');
 
             $table->string('name_bank');
+            $table->string('agency');
             $table->string('number', 25);
 
             $table->integer('type_account_id')->unsigned();

@@ -15,8 +15,15 @@
 
 
 //charts
-Route::get('chartjs', 'ChartController@index');
+Route::get('economias', function (){
+	return view('carteira.economias');
+});
 
+//Rota de economias
+Route::get('relatorios', 'ChartController@index');
+
+//pagina principal
+Route::get('/dashboard', 'HomeController@index');
 
 // Rotas de Autenticação
 Route::get('login', 'Auth\AuthController@getLogin');
@@ -85,6 +92,16 @@ Route::group(['prefix' => 'usuario', 'middleware' => 'auth'], function () {
 
 
 	    });
+
+
+	    // Images Route...
+	    Route::get('/images/{folder}/{image?}/{size?}', ['as' => 'images', 'uses' => function($folder, $image, $size) {
+	        $path = storage_path() . '/app/' . $folder . '/' . $image;
+	        $img = Image::make($path)->resize(null, $size, function ($constraint) {
+	            $constraint->aspectRatio();
+	        });
+	        return $img->response();
+	    }]);
 });
 
 

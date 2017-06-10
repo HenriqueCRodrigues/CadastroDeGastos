@@ -48,6 +48,7 @@ class AccountController extends Controller
         Account::create([
                     'of_user'         => Auth::user()->id,
                     'name_bank'       => $request->name_bank,
+                    'agency'       => $request->agency,
                     'number'          => $request->number,
                     'type_account_id' => $request->type_account_id,
             ]);
@@ -96,6 +97,7 @@ class AccountController extends Controller
 
             $account                  = Account::findOrFail($id);
             $account->name_bank       = $request->name_bank;
+            $account->agency          = $request->agency;
             $account->number          = $request->number;
             $account->type_account_id = $request->type_account_id;
             
