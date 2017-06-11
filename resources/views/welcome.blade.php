@@ -86,8 +86,8 @@
                                 <div class="profile-data-title"></div>
                             </div>
                             <div class="profile-controls">
-                                <a href="pages-profile.html" class="profile-control-left"><span class="fa fa-info"></span></a>
-                                <a href="pages-messages.html" class="profile-control-right"><span class="fa fa-envelope"></span></a>
+                                <a href="#" class="profile-control-left"><span class="fa fa-info"></span></a>
+                                <a href="#!" class="profile-control-right"><span class="fa fa-envelope"></span></a>
                             </div>
                         </div>                                                                        
                     </li>
@@ -136,7 +136,7 @@
                     <!-- END SIGN OUT -->
                     <!-- SALDO -->
                     <li class="pull-right">
-                        <a>
+                        <a href="{{route('index')}}">
                             <strong>Saldo: <strong style="{!!(Session::get('user.saldo') < 0) ? 'color:red' : '' !!}">R$ {{number_format(Session::get('user.saldo'),2,',','.')}}</strong></strong>
                             
                             <strong><strong>

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 use Auth;
+use Session;
 use App\Models\User;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -61,6 +63,15 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        if(!Session::get('user.saldo') || Session::get('user.saldo') == '')
+        {
+        $totalExpenses = DB::table('expenses')->sum('value');
+        $totalRecipes  = DB::table('recipes')->sum('value');
+
+        Session::put('user.saldo', $totalRecipes-$totalExpenses);
+        }
+
+        
         return view('PASTALYOUT.ARQUIVOLAYOUT');
     }
 

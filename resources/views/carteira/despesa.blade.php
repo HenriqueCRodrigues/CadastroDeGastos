@@ -5,26 +5,30 @@
 </div>
 </br></br>
 <div class="col-sm-12">
-	<form method="POST" action="{{route('salvar_despesa')}}">
+	<form method="POST" action="{{strpos(Request::url(), 'editar') ? route('atualizar_despesa', $despesa->id) : route('salvar_despesa')}}">
 		<input type="hidden" name="_token" value="{{ csrf_token() }}">
 		<div class="col-md-5">
 			<div class="form-group">
 		        <label for="nome">Descrição</label>
-		        <input type="text" class="form-control" name="name" id="name"
+		        <input type="text" class="form-control" name="name" value="{{strpos(Request::url(), 'editar') ? $despesa->name : ''}}" id="name"
 		               placeholder="Ex: Aluguel" required>
 		    </div>
 		    <label for="contaBancaria">Conta Bancária</label>
 		    <div class="form-group">
 		        <select class="form-control" name="account_id">
 		            @foreach($contas as $conta)
+		            @if(strpos(Request::url(), 'editar') && $conta->id == $despesa->account_id)
+		            <option value="{{$conta->id}}" selected>Banco: {{$conta->name_bank}} / Conta: {{$conta->typeAccount->name}}</option>
+		            @else
 		            <option value="{{$conta->id}}">Banco: {{$conta->name_bank}} / Conta: {{$conta->typeAccount->name}}</option>
+		            @endif
 		            @endforeach
 		        </select>
 		    </div>
 			
 		    <div class="input-group">
 		        <span class="input-group-addon">R$</span>
-		        <input type="number" min="0" class="form-control" name="value" id="value"
+		        <input type="number" min="0" class="form-control" name="value" value="{{strpos(Request::url(), 'editar') ? $despesa->value : ''}}" id="value"
 		               placeholder="Valor" required>
 		    </div>
 		</div>
@@ -35,7 +39,11 @@
 		        <div class="form-group">
 		            <select class="form-control" name="contact_id">
 		                @foreach($contatos as $contato)
+		                @if(strpos(Request::url(), 'editar') && $contato->id == $despesa->contact_id)
+			            <option value="{{$contato->id}}" selected>{{$contato->name}}</option>
+			            @else
 			            <option value="{{$contato->id}}">{{$contato->name}}</option>
+			            @endif
 			            @endforeach
 		            </select>
 		            </select>
@@ -44,11 +52,10 @@
 		    <div class="form-group">
 				<label class="col-md-3 control-label">Data</label>
 				<div class="form-group">
-	                <input type="text" name="date" class="form-control datepicker" value="2017-06-03" data-date-format="dd-mm-yyyy">
+	                <input type="text" name="date" class="form-control datepicker" value="{{strpos(Request::url(), 'editar') ? $despesa->date : '2017-06-03'}}" data-date-format="dd-mm-yyyy">
 		        </div>
 			</div>	
-		    <button type="submit" class="btn btn-default">Submit
-        	</button>
+		    <input type="submit" value="{{strpos(Request::url(), 'editar') ? 'Editar Despesa' : 'Cadastrar Despesa'}}" class="btn btn-default">
 		</div>
 	</form>
 </div>
@@ -94,7 +101,7 @@
 	                    <td>{{$despesa->date}}</td>
 	     
 	                    <td>
-	                        <button class="btn btn-sm btn-warning glyphicon glyphicon-pencil"></button>
+	                         <a href="{{route('editar_despesa', $despesa->id)}}" class="btn btn-sm btn-warning glyphicon glyphicon-pencil"></a>
 	                    </td>
 	                    <td>
 	                        <a href="{{route('remover_despesa', $despesa->id)}}" class="btn btn-sm btn-danger glyphicon glyphicon-remove"></a>

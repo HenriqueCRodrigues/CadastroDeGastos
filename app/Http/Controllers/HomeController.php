@@ -18,9 +18,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-      $totalExpenses = 0;
-      $totalRecipes = 0;
-
+     
       $totalExpenses = DB::table('expenses')->sum('value');
       $totalRecipes = DB::table('recipes')->sum('value');
 
