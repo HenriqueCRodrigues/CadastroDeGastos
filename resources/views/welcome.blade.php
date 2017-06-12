@@ -9,9 +9,12 @@
 
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" type="text/css" id="theme" href="{{ URL::asset('theme/css/theme-default.css') }}"/>
+    
     <!-- CHARTS-->
     {!! Charts::assets() !!}
+
     <!-- THEME -->
+
     <!-- START PLUGINS --> 
     
     <script type="text/javascript" src="{{ URL::asset('theme/js/plugins/jquery/jquery.min.js') }}"></script> 
@@ -51,7 +54,6 @@
     <script type="text/javascript" src="{{ URL::asset('theme/js/settings.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('theme/js/plugins.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('theme/js/actions.js') }}"></script>
-    <script type="text/javascript" src="{{ URL::asset('theme/js/demo_dashboard.js') }}"></script>
             
     <!-- END TEMPLATE -->
 
@@ -108,7 +110,7 @@
                         <a href="{{ route('index_conta') }}"><span class="fa fa-bank"></span> <span class="xn-text">Conta Bancária </span></a>
                     </li>  
                     <li>
-                        <a href="{{ route('index_relatorio') }}"><span class="fa fa-bar-chart-o"></span> <span class="xn-text">Relatórios</span></a>
+                        <a href="{{ url('/relatorios') }}"><span class="fa fa-bar-chart-o"></span> <span class="xn-text">Relatórios</span></a>
                     </li> 
                     <li>
                         <a href="{{ route('index_economia') }}"><span class="fa fa fa-dollar"></span> <span class="xn-text">Metas de economia</span></a>

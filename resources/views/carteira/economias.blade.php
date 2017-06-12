@@ -5,17 +5,17 @@
 </div>
 </br></br>
 <div class="col-sm-12">
-	<form method="POST" action="{{strpos(Request::url(), 'editar') ? route('atualizar_contato', $contato->id) : route('salvar_contato')}}">
+	<form method="POST" action="{{strpos(Request::url(), 'editar') ? route('atualizar_economia', $economia->id) : route('salvar_economia')}}">
 	<input type="hidden" name="_token" value="{{ csrf_token() }}">
 		<div class="col-md-2"></div>
 		<div class="col-md-8">
 			<div class="form-group">
 		        <label for="name">Descrição</label>
-		        <input type="text" class="form-control" name="name"  id="descricao" required>
+		        <input type="text" class="form-control" name="desc" value="{{strpos(Request::url(), 'editar') ? $economia->desc : ''}}"  id="descricao" required>
 		    </div>
 		    <div class="input-group">
 		        <span class="input-group-addon">R$</span>
-		        <input type="number" min="0" class="form-control" name="value" id="value"
+		        <input type="number" min="0" class="form-control" name="value" value="{{strpos(Request::url(), 'editar') ? $economia->value : ''}}" id="value"
 		               placeholder="Valor" required>
 		    </div>
 		    </br></br></br>
@@ -55,18 +55,18 @@
 	                </tr>
 	            </thead>
 	            <tbody>
-	            	
+	            	@foreach($economias as $economia)
 	                <tr>
-	                    <td></td>
-	                    <td></td>
-	     
+	                    <td>{{$economia->desc}}</td>
+	                    <td>{{$economia->value}}</td>
 	                    <td>
-	                        <button class="btn btn-sm btn-warning glyphicon glyphicon-pencil"></button>
+	                         <a href="{{route('editar_economia', $economia->id)}}" class="btn btn-sm btn-warning glyphicon glyphicon-pencil"></a>
 	                    </td>
 	                    <td>
-	                        <a href="#" class="btn btn-sm btn-danger glyphicon glyphicon-remove"></a>
+	                        <a href="{{route('remover_economia', $economia->id)}}" class="btn btn-sm btn-danger glyphicon glyphicon-remove"></a>
 	                    </td>
 	                </tr>
+	               	@endforeach
 	            </tbody>
 	        </table>
 	    </div>

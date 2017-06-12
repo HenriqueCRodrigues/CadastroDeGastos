@@ -12,10 +12,8 @@
 */
 
 
-
-
-
-
+//Rota de chart
+Route::get('relatorios', 'ChartController@index');
 
 
 // Rotas de Autenticação
@@ -88,14 +86,20 @@ Route::group(['prefix' => 'usuario', 'middleware' => 'auth'], function () {
 	    });
 
 
-	    //Rota de economias
-		Route::get('relatorios', ['as'=>'index_relatorio', 'uses' => 'ChartController@index']);
+	    
 
 		
-		//charts
-		Route::get('economias', ['as'=>'index_economia',  function (){
-		return view('carteira.economias');
-		}]);
+		//Economias
+		Route::group(['prefix'=>'economias'], function(){
+
+	    	Route::get('/', ['as'=>'index_economia', 'uses'=>'EconomyController@index']);
+	    	Route::post('salvar', ['as' => 'salvar_economia', 'uses' => 'EconomyController@store']);
+	    	Route::get('editar/{id}', ['as' => 'editar_economia', 'uses' => 'EconomyController@edit']);
+	    	Route::post('atualizar/{id}', ['as' => 'atualizar_economia', 'uses' => 'EconomyController@update']);
+			Route::get('remover/{id}', ['as' => 'remover_economia', 'uses' => 'EconomyController@destroy']);
+
+
+	    });
 
 
 	    // Images Route...
