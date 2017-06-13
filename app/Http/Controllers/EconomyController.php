@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 use Auth;
-use Session;
 use App\Models\Economy;
 use App\Http\Requests;
 use App\Http\Requests\EconomyRequest;
@@ -21,14 +20,6 @@ class EconomyController extends Controller
      */
     public function index()
     {
-        
-        if(!Session::get('user.saldo') || Session::get('user.saldo') == '')
-        {
-        $totalExpenses = DB::table('expenses')->sum('value');
-        $totalRecipes  = DB::table('recipes')->sum('value');
-
-        Session::put('user.saldo', $totalRecipes-$totalExpenses);
-        }
         
         $id = Auth::user()->id;
         

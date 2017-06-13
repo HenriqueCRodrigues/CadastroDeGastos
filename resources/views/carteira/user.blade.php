@@ -5,7 +5,7 @@
 </div>
 </br></br>
 <div class="col-sm-12">
-	<form method="POST" action="{{route('atualizar_usuario')}}">
+	 {!! Form::model($user, ['route' => ['atualizar_usuario'], 'files' => true]) !!}
 	<input type="hidden" name="_token" value="{{ csrf_token() }}">
 		<div class="col-md-2"></div>
 		<div class="col-md-8">
@@ -27,12 +27,12 @@
 		    </div>
 
 		    <div class="form-group">
-		        <label for="email">Foto</label>
-		        <input type="file" class="form-control" name="photo" id="photo">
+		        <label for="photo">Foto</label>
+		        {!! Form::file('photo', ['class' => 'form-control', 'id' => 'photo']) !!}
 		    </div>
 
 		    <div class="form-group">
-            	<img src="{{ route('images', [$user->photo, 150]) }}">
+            	<img src="{{($user->photo != NULL) ? route('images', [$user->photo, 150]) : '../theme/assets/images/users/userdefault.png'}}">
             	<img id="view-img" style="width: 150px; height: 150px" src="default.jpg">
     		</div><br><br>
 
@@ -43,7 +43,7 @@
             </div>
         	
 		</div>
-	</form>
+	 {!! Form::close() !!}
 </div>
 
 
@@ -70,6 +70,7 @@ $("#photo").change(function(){
         reader.readAsDataURL(this.files[0]);
     }
 });
+
 </script>
 
 @endsection

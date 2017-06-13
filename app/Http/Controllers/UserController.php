@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 use Auth;
-use Session;
 use App\Models\User;
 use App\Http\Requests;
 use App\Http\Requests\UserRequest;
@@ -82,21 +81,21 @@ class UserController extends Controller
             $user = User::findOrFail(Auth::user()->id);
             
             $user->fill($request->except('photo'));
-
             if(isset($request['photo'])) 
             {   
                 if($user->photo != NULL) 
                 {
-                   unlink(route('images', [$user->photo]));
+                   unlink('../storage/app/'.$user->photo);
                 }
+
 
                 $photo = $request->file('photo');
                 $user->photo = $user->uploadImage($photo, 'users/');
             
             }
 
+            $user->password = bcrypt($request->password);
             $user->save();
-                
             return redirect()->route('editar_usuario');
             
     }

@@ -19,7 +19,7 @@
             <div class="widget-data">  
                 <div>                                    
                     <div class="widget-title">Despesas</div>
-                <div class="widget-int">R${{$totalExpenses}}</div>
+                <div class="widget-int">R${{number_format($totalExpenses,2,',','.')}}</div>
                 </div>
             </div>
         </div>
@@ -34,7 +34,7 @@
             <div class="widget-data">  
                 <div>                                    
                     <div class="widget-title">Receitas</div>
-                    <div class="widget-int">R${{$totalRecipes}}</div>
+                    <div class="widget-int">R${{number_format($totalRecipes,2,',','.')}}</div>
                 </div>
             </div>
         </div>
