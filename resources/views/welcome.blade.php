@@ -88,14 +88,14 @@
                                 <div class="profile-data-title"></div>
                             </div>
                             <div class="profile-controls">
-                                <a href="#" class="profile-control-left"><span class="fa fa-info"></span></a>
+                                <a href="{{route('editar_usuario')}}" class="profile-control-left"><span class="fa fa-info"></span></a>
                                 <a href="#!" class="profile-control-right"><span class="fa fa-envelope"></span></a>
                             </div>
                         </div>                                                                        
                     </li>
                     <li class="xn-title">Navegação</li>
                     <li>
-                        <a href="{{ route('index') }}"><span class="fa fa fa-desktop"></span> <span class="xn-text">Dashboard</span></a>
+                        <a href="{{ route('index') }}"><span class="fa fa fa-desktop"></span> <span class="xn-text">Inicio</span></a>
                     </li> 
                     <li>
                         <a href="{{ route('index_despesa') }}"><span class="fa fa-shopping-cart"></span> <span class="xn-text">Despesas</span></a>
@@ -110,7 +110,7 @@
                         <a href="{{ route('index_conta') }}"><span class="fa fa-bank"></span> <span class="xn-text">Conta Bancária </span></a>
                     </li>  
                     <li>
-                        <a href="{{ url('/relatorios') }}"><span class="fa fa-bar-chart-o"></span> <span class="xn-text">Relatórios</span></a>
+                        <a href="{{ route('index_relatorio') }}"><span class="fa fa-bar-chart-o"></span> <span class="xn-text">Relatórios</span></a>
                     </li> 
                     <li>
                         <a href="{{ route('index_economia') }}"><span class="fa fa fa-dollar"></span> <span class="xn-text">Metas de economia</span></a>
@@ -208,5 +208,7 @@
         <!-- END PAGE CONTAINER -->
 
 </body>
+
+@yield('pbody')
 
 </html>

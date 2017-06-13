@@ -9,6 +9,7 @@ use Auth;
 use Session;
 use App\Models\User;
 use App\Http\Requests;
+use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
 
 class UserController extends Controller
@@ -61,18 +62,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
-        if(!Session::get('user.saldo') || Session::get('user.saldo') == '')
-        {
-        $totalExpenses = DB::table('expenses')->sum('value');
-        $totalRecipes  = DB::table('recipes')->sum('value');
-
-        Session::put('user.saldo', $totalRecipes-$totalExpenses);
-        }
-
-        
-        return view('PASTALYOUT.ARQUIVOLAYOUT');
+        $user = User::findOrFail(Auth::user()->id);
+        return view('carteira.user', compact('user'));
     }
 
     /**
@@ -82,47 +75,33 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UserRequest $request, $id)
+    public function update(UserRequest $request)
     {
 
 
-            $user = User::findOrFail($id);
+            $user = User::findOrFail(Auth::user()->id);
+            
+            $user->fill($request->except('photo'));
 
-            if(Auth::user()->id == $id) 
-            {
-                $user->fill($request->except('photo'));
-
-                if(isset($request['photo'])) 
-                {   
-                    if($user->photo != NULL) 
-                    {
-                        unlink(route('images', [$user->photo]));
-                    }
-
-                    $photo = $request->file('photo');
-                    $user->photo = $user->uploadImage($photo, 'users/');
+            if(isset($request['photo'])) 
+            {   
+                if($user->photo != NULL) 
+                {
+                   unlink(route('images', [$user->photo]));
                 }
 
-                $user->save();
+                $photo = $request->file('photo');
+                $user->photo = $user->uploadImage($photo, 'users/');
+            
             }
 
+            $user->save();
                 
-
-
-
-
-
-
-
-
-
-
-
-
-            return redirect('PREFIX DA ROTA');
+            return redirect()->route('editar_usuario');
             
-        }
+    }
 
+    
 
 
 

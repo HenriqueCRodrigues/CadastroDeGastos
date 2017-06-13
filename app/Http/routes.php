@@ -12,9 +12,6 @@
 */
 
 
-//Rota de chart
-Route::get('relatorios', 'ChartController@index');
-
 
 // Rotas de Autenticação
 Route::get('login', 'Auth\AuthController@getLogin');
@@ -39,7 +36,10 @@ Route::get('/', function () {
 Route::group(['prefix' => 'usuario', 'middleware' => 'auth'], function () {
 
 		//pagina principal
-		Route::get('dashboard', ['as'=>'index', 'uses'=>'HomeController@index']);
+		Route::get('inicio', ['as'=>'index', 'uses'=>'HomeController@index']);
+
+		Route::get('editar', ['as'=>'editar_usuario', 'uses'=>'UserController@edit']);
+		Route::post('atualizar', ['as'=>'atualizar_usuario', 'uses'=>'UserController@update']);
 
 		Route::group(['prefix'=>'contato'], function(){
 			Route::get('/',['as' => 'index_contato', 'uses'=>'ContactController@index']);
@@ -86,7 +86,8 @@ Route::group(['prefix' => 'usuario', 'middleware' => 'auth'], function () {
 	    });
 
 
-	    
+	    //Rota de chart
+		Route::get('relatorios', ['as'=>'index_relatorio', 'uses' => 'ChartController@index']);
 
 		
 		//Economias

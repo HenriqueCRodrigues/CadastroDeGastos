@@ -3,7 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Session;
 use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Support\Facades\DB;
 
 class Authenticate
 {
@@ -22,6 +24,8 @@ class Authenticate
      */
     public function __construct(Guard $auth)
     {
+        
+        
         $this->auth = $auth;
     }
 
