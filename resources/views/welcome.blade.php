@@ -9,9 +9,12 @@
 
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" type="text/css" id="theme" href="{{ URL::asset('theme/css/theme-default.css') }}"/>
+    
     <!-- CHARTS-->
     {!! Charts::assets() !!}
+
     <!-- THEME -->
+
     <!-- START PLUGINS --> 
     
     <script type="text/javascript" src="{{ URL::asset('theme/js/plugins/jquery/jquery.min.js') }}"></script> 
@@ -24,6 +27,19 @@
     <script type="text/javascript" src="{{ URL::asset('theme/js/plugins/icheck/icheck.min.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('theme/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js') }}"></script>
 
+
+
+    
+    <script type="text/javascript" src="{{ URL::asset('theme/js/plugins/scrolltotop/scrolltopcontrol.js') }}"></script>
+
+    <script type="text/javascript" src="{{ URL::asset('theme/js/plugins/morris/raphael-min.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('theme/js/plugins/morris/morris.min.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('theme/js/plugins/rickshaw/d3.v3.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('theme/js/plugins/rickshaw/rickshaw.min.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('theme/js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('theme/js/plugins/bootstrap/bootstrap-datepicker.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('theme/js/plugins/owl/owl.carousel.min.js') }}"></script>
+    
     <script type="text/javascript" src="{{ URL::asset('theme/js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('theme/js/plugins/tableexport/tableExport.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('theme/js/plugins/tableexport/jquery.base64.js') }}"></script>
@@ -37,7 +53,7 @@
     <!-- START TEMPLATE -->
     <script type="text/javascript" src="{{ URL::asset('theme/js/settings.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('theme/js/plugins.js') }}"></script>
-    <script type="text/javascript" src="{{ URL::asset('theme/js/actions.js') }}"></script> 
+    <script type="text/javascript" src="{{ URL::asset('theme/js/actions.js') }}"></script>
             
     <!-- END TEMPLATE -->
 
@@ -61,41 +77,44 @@
                     </li>
                     <li class="xn-profile">
                         <a href="#" class="profile-mini">
-                            <img src="theme/assets/images/users/avatar.jpg" alt="John Doe"/>
+                            <img src="" alt="John Doe"/>
                         </a>
                         <div class="profile">
                             <div class="profile-image">
-                                <img src="theme/assets/images/users/avatar.jpg" alt="John Doe"/>
+                                <img src="{{ Auth::user()->photo != NULL ? route('images', [Auth::user()->photo, 170]) : '../theme/assets/images/users/userdefault.png'}}" alt="John Doe"/>
                             </div>
                             <div class="profile-data">
                                 <div class="profile-data-name">{{Auth::user()->name}}</div><!-- criar cadastro de usuario-->
                                 <div class="profile-data-title"></div>
                             </div>
                             <div class="profile-controls">
-                                <a href="pages-profile.html" class="profile-control-left"><span class="fa fa-info"></span></a>
-                                <a href="pages-messages.html" class="profile-control-right"><span class="fa fa-envelope"></span></a>
+                                <a href="{{route('editar_usuario')}}" class="profile-control-left"><span class="fa fa-info"></span></a>
+                                <a href="#!" class="profile-control-right"><span class="fa fa-envelope"></span></a>
                             </div>
                         </div>                                                                        
                     </li>
                     <li class="xn-title">Navegação</li>
                     <li>
-                        <a href="{{ route('index_despesa') }}"><span class="fa fa-money"></span> <span class="xn-text">Despesas</span></a>
+                        <a href="{{ route('index') }}"><span class="fa fa fa-desktop"></span> <span class="xn-text">Inicio</span></a>
+                    </li> 
+                    <li>
+                        <a href="{{ route('index_despesa') }}"><span class="fa fa-shopping-cart"></span> <span class="xn-text">Despesas</span></a>
                     </li>
                     <li>
                         <a href="{{ route('index_receita') }}"><span class="fa fa-money"></span> <span class="xn-text">Receitas</span></a>
                     </li>
-                    <li>
-                        <a href="#"><span class="fa fa-bar-chart-o"></span> <span class="xn-text">Relatórios</span></a>
-                    </li> 
-                    <li>
-                        <a href="#"><span class="fa fa-table"></span> <span class="xn-text">Tabela </span></a>
-                    </li>  
                     <li>
                         <a href="{{ route('index_contato') }}"><span class="fa fa-users"></span> <span class="xn-text">Contatos </span></a>
                     </li>
                     <li>
                         <a href="{{ route('index_conta') }}"><span class="fa fa-bank"></span> <span class="xn-text">Conta Bancária </span></a>
                     </li>  
+                    <li>
+                        <a href="{{ route('index_relatorio') }}"><span class="fa fa-bar-chart-o"></span> <span class="xn-text">Relatórios</span></a>
+                    </li> 
+                    <li>
+                        <a href="{{ route('index_economia') }}"><span class="fa fa fa-dollar"></span> <span class="xn-text">Metas de economia</span></a>
+                    </li> 
                     
                 </ul>
                 <!-- END X-NAVIGATION -->
@@ -119,8 +138,9 @@
                     <!-- END SIGN OUT -->
                     <!-- SALDO -->
                     <li class="pull-right">
-                        <a>
-                            <strong>Saldo: </strong>
+                        <a href="{{route('index')}}">
+                            <strong>Saldo: <strong style="{!!(Session::get('user.saldo') < 0) ? 'color:red' : '' !!}">R$ {{number_format(Session::get('user.saldo'),2,',','.')}}</strong></strong>
+                            
                             <strong><strong>
                         </a>         
                     </li>
@@ -188,5 +208,7 @@
         <!-- END PAGE CONTAINER -->
 
 </body>
+
+@yield('pbody')
 
 </html>

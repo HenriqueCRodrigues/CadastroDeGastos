@@ -13,11 +13,6 @@
 
 
 
-
-//charts
-Route::get('chartjs', 'ChartController@index');
-
-
 // Rotas de Autenticação
 Route::get('login', 'Auth\AuthController@getLogin');
 Route::post('login', 'Auth\AuthController@postLogin');
@@ -40,7 +35,11 @@ Route::get('/', function () {
 
 Route::group(['prefix' => 'usuario', 'middleware' => 'auth'], function () {
 
-		Route::get('/',['as'=>'index', 'uses'=>'UserController@index']);
+		//pagina principal
+		Route::get('inicio', ['as'=>'index', 'uses'=>'HomeController@index']);
+
+		Route::get('editar', ['as'=>'editar_usuario', 'uses'=>'UserController@edit']);
+		Route::post('atualizar', ['as'=>'atualizar_usuario', 'uses'=>'UserController@update']);
 
 		Route::group(['prefix'=>'contato'], function(){
 			Route::get('/',['as' => 'index_contato', 'uses'=>'ContactController@index']);
@@ -85,6 +84,33 @@ Route::group(['prefix' => 'usuario', 'middleware' => 'auth'], function () {
 
 
 	    });
+
+
+	    //Rota de chart
+		Route::get('relatorios', ['as'=>'index_relatorio', 'uses' => 'ChartController@index']);
+
+		
+		//Economias
+		Route::group(['prefix'=>'economias'], function(){
+
+	    	Route::get('/', ['as'=>'index_economia', 'uses'=>'EconomyController@index']);
+	    	Route::post('salvar', ['as' => 'salvar_economia', 'uses' => 'EconomyController@store']);
+	    	Route::get('editar/{id}', ['as' => 'editar_economia', 'uses' => 'EconomyController@edit']);
+	    	Route::post('atualizar/{id}', ['as' => 'atualizar_economia', 'uses' => 'EconomyController@update']);
+			Route::get('remover/{id}', ['as' => 'remover_economia', 'uses' => 'EconomyController@destroy']);
+
+
+	    });
+
+
+	    // Images Route...
+	    Route::get('/images/{folder}/{image?}/{size?}', ['as' => 'images', 'uses' => function($folder, $image, $size) {
+	        $path = storage_path() . '/app/' . $folder . '/' . $image;
+	        $img = Image::make($path)->resize(null, $size, function ($constraint) {
+	            $constraint->aspectRatio();
+	        });
+	        return $img->response();
+	    }]);
 });
 
 

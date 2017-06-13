@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 use Auth;
 use App\Models\Contact;
@@ -19,6 +20,7 @@ class ContactController extends Controller
      */
     public function index()
     {
+        
         $id = Auth::user()->id;
         
         $contatos = Contact::where('of_user', $id)->get();

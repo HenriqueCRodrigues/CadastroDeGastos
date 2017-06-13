@@ -2,10 +2,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
-use App\Models\Account;
+use Auth;
 use App\Http\Requests;
-use App\Models\Expense;
 use Charts;
 
 class ChartController extends Controller
@@ -13,10 +13,17 @@ class ChartController extends Controller
     public function index()
     {
 
-        $chart = Charts::database(Expense::all(), 'bar', 'highcharts')
-          ->setElementLabel("Gastos por mês")
-          ->setResponsive(true)
-          ->groupByMonth();
-            return view('carteira.relatorio', ['chart' => $chart]);
+    	$expenses = DB::table('expenses')->sum('value');
+    	$recipes = DB::table('recipes')->sum('value');
+      
+        $chart = Charts::create('bar', 'highcharts')
+          ->setTitle("Despesas e Receitas")
+          ->setElementLabel('Total')
+          ->setLabels(['Despesas', 'Receitas'])
+          ->setValues([$expenses,$recipes])
+          ->setResponsive(true);
+         
+          return view('carteira.relatorio', ['chart' => $chart]);
     }
 }
+

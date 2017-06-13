@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
+use Auth;
 
 class UserRequest extends Request
 {
@@ -24,12 +25,13 @@ class UserRequest extends Request
      */
     public function rules()
     {
+        $id = Auth::user()->id;
+
         return [
             'name'                  => 'required|max:255',
-            'email'                 => 'required|email|max:100|unique:users',
-            'login'                 => 'required|max:30|unique:users,email,'.$id.'',
-            'password'              => 'required|confirmed|min:4',
-            'password_confirmation' => 'required|min:6',
+            'email'                 => 'required|email|max:100|unique:users,email,'.$id,
+            'login'                 => 'required|max:30|unique:users,login,'.$id,
+            'password'              => 'required|min:4',
         ];
     }
 
@@ -51,12 +53,9 @@ class UserRequest extends Request
             'login.unique'                    => 'Não pode haver Logins Iguais, digite outro por favor.',
             
             'password.required'               => 'É obrigatório inserir a Senha',
-            'password.confirmed'              => 'O campo Senha esta com valor diferente do campo Confirmar Senha.',
             'passaword.min'                   => 'Digitar ao menos :min caracteres para a sua senha',
 
-            'password_confirmation.required'  => 'É obrigatório inserir a Confirmação de Senha.',
-            'password_confirmation.confirmed' => 'O campo Confirmar Senha esta com valor diferente do campo Senha.',
-            'passaword_confirmation.min'      => 'Digitar ao menos :min caracteres para a sua senha.',
+            
 
         ];
 

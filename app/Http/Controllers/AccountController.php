@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 use Auth;
 use App\Models\Account;
@@ -19,6 +20,7 @@ class AccountController extends Controller
      */
     public function index()
     {
+        
         $id = Auth::user()->id;
         
         $contas = Account::where('of_user', $id)->get();
@@ -48,6 +50,7 @@ class AccountController extends Controller
         Account::create([
                     'of_user'         => Auth::user()->id,
                     'name_bank'       => $request->name_bank,
+                    'agency'       => $request->agency,
                     'number'          => $request->number,
                     'type_account_id' => $request->type_account_id,
             ]);
@@ -96,6 +99,7 @@ class AccountController extends Controller
 
             $account                  = Account::findOrFail($id);
             $account->name_bank       = $request->name_bank;
+            $account->agency          = $request->agency;
             $account->number          = $request->number;
             $account->type_account_id = $request->type_account_id;
             

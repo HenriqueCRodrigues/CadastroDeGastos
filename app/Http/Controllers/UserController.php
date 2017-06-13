@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 use Auth;
 use App\Models\User;
 use App\Http\Requests;
+use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
 
 class UserController extends Controller
@@ -59,9 +61,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
-        return view('PASTALYOUT.ARQUIVOLAYOUT');
+        $user = User::findOrFail(Auth::user()->id);
+        return view('carteira.user', compact('user'));
     }
 
     /**
@@ -71,26 +74,33 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UserRequest $request, $id)
+    public function update(UserRequest $request)
     {
 
 
-            $user = User::findOrFail($id);
+            $user = User::findOrFail(Auth::user()->id);
+            
+            $user->fill($request->except('photo'));
+            if(isset($request['photo'])) 
+            {   
+                if($user->photo != NULL) 
+                {
+                   unlink('../storage/app/'.$user->photo);
+                }
 
-            if(Auth::user()->id == $id) 
-            {
-                $user->name     = $request->name;
-                $user->email    = $request->email;
-                $user->login    = $request->login;
-                $user->password = $request->password;
 
-                $user->save();
+                $photo = $request->file('photo');
+                $user->photo = $user->uploadImage($photo, 'users/');
+            
             }
 
-            return redirect('PREFIX DA ROTA');
+            $user->password = bcrypt($request->password);
+            $user->save();
+            return redirect()->route('editar_usuario');
             
-        }
+    }
 
+    
 
 
 

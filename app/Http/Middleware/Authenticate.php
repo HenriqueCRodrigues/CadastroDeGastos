@@ -3,7 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Session;
 use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Support\Facades\DB;
 
 class Authenticate
 {
@@ -22,6 +24,15 @@ class Authenticate
      */
     public function __construct(Guard $auth)
     {
+        
+        if(!Session::get('user.saldo') || Session::get('user.saldo') == '')
+        {
+        $totalExpenses = DB::table('expenses')->sum('value');
+        $totalRecipes  = DB::table('recipes')->sum('value');
+
+        Session::put('user.saldo', $totalRecipes-$totalExpenses);
+        }
+        
         $this->auth = $auth;
     }
 
