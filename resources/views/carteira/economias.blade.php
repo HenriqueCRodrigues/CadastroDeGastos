@@ -6,11 +6,11 @@
 </br></br>
 <div class="col-sm-12">
 	<form method="POST" action="{{strpos(Request::url(), 'editar') ? route('atualizar_economia', $economia->id) : route('salvar_economia')}}">
-	<input type="hidden" name="_token" value="{{ csrf_token() }}">
 		<div class="col-md-2"></div>
 		<div class="col-md-8">
 			<div class="form-group">
 		        <label for="name">Descrição</label>
+				<input type="hidden" name="_token" value="{{ csrf_token() }}">
 		        <input type="text" class="form-control" name="desc" value="{{strpos(Request::url(), 'editar') ? $economia->desc : ''}}"  id="descricao" required>
 		    </div>
 		    <div class="input-group">

@@ -24,13 +24,14 @@ class ExpenseController extends Controller
     public function index()
     {
 
-        $totalExpenses = DB::table('expenses')->sum('value');
-        $totalRecipes = DB::table('recipes')->sum('value');
+        $id = Auth::user()->id;
+
+        $totalExpenses = DB::table('expenses')->where('user_id', $id)->sum('value');
+        $totalRecipes  = DB::table('recipes')->where('user_id', $id)->sum('value');
 
         Session::put('user.saldo', $totalRecipes-$totalExpenses);
+        Session::put('user.id', $id);        
 
-        $id = Auth::user()->id;
-        
         $despesas = Expense::where('user_id', $id)->get();
 
         $contas = Account::where('of_user', $id)->get();
