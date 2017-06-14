@@ -17,13 +17,13 @@ class HomeController extends Controller
 {
     public function index()
     {
-     
-      $totalExpenses = DB::table('expenses')->sum('value');
-      
-      $totalRecipes  = DB::table('recipes')->sum('value');
 
       $id = Auth::user()->id;
+     
+      $totalExpenses = DB::table('expenses')->where('user_id', $id)->sum('value');
       
+      $totalRecipes  = DB::table('recipes')->where('user_id', $id)->sum('value');
+
       $despesas = Expense::where('user_id', $id)->get();
 
       $receitas = Recipe::where('user_id', $id)->get();

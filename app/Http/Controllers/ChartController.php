@@ -13,8 +13,9 @@ class ChartController extends Controller
     public function index()
     {
 
-    	$expenses = DB::table('expenses')->sum('value');
-    	$recipes = DB::table('recipes')->sum('value');
+    	$expenses = DB::table('expenses')->where('user_id', Auth::user()->id)->sum('value');
+    	$recipes = DB::table('recipes')->where('user_id', Auth::user()->id)->sum('value');
+    
       
         $chart = Charts::create('bar', 'highcharts')
           ->setTitle("Despesas e Receitas")
