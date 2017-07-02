@@ -23,9 +23,10 @@ class CreateAccountsTable extends Migration
             $table->string('number', 25);
 
             $table->integer('type_account_id')->unsigned();
-            $table->foreign('type_account_id')->references('id')->on('type_accounts');
+            $table->foreign('type_account_id')->references('id')->on('type_accounts')->onDelete('cascade');
             
             $table->timestamps();
+            $table->engine = 'InnoDB';
         });
 
     }

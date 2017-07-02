@@ -77,12 +77,20 @@ class ContactController extends Controller
     public function edit($id)
     {
         $idU = Auth::user()->id;
+        $contato = Contact::where(['id' => $id, 'of_user' => $idU])->first();
+
+        if($contato != null) 
+        {
+            $contatos = Contact::where('of_user', $idU)->get();
+            return view('carteira.contato', compact('contatos','contato'));    
+        }
+
+
+        return redirect()->route('index_contato');
         
-        $contatos = Contact::where('of_user', $idU)->get();
 
-        $contato = Contact::findOrFail($id);
+        
 
-        return view('carteira.contato', compact('contatos','contato'));
     }
 
     /**
@@ -94,12 +102,20 @@ class ContactController extends Controller
      */
     public function update(Request $request, $id)
     {
-            $contact        = Contact::findOrFail($id);
-            $contact->name  = $request->name;
-            $contact->phone = $request->phone;
-            $contact->email = $request->email;
+            $idU = Auth::user()->id;
+
+            $contact = Contact::where(['id' => $id, 'of_user' => $idU])->first();
+
+            if($contact != null) 
+            {
+                $contact->name  = $request->name;
+                $contact->phone = $request->phone;
+                $contact->email = $request->email;
+                
+                $contact->save();
+
+            }
             
-            $contact->save();
     
 
 
@@ -114,6 +130,14 @@ class ContactController extends Controller
      */
     public function destroy($id)
     {
+        $idU = Auth::user()->id;
+        $contato = Contact::where(['id' => $id, 'of_user' => $idU])->first();
+        
+        if (!\Request::ajax() || $contato == null) 
+        {
+            abort(403);
+        }
+
         $contato = Contact::destroy($id);
 
         return  redirect()->route('index_contato');

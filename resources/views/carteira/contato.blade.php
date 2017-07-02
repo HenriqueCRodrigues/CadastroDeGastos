@@ -49,7 +49,7 @@
 	                         <a href="{{route('editar_contato', $contato->id)}}" class="btn btn-sm btn-warning glyphicon glyphicon-pencil"></a>
 	                    </td>
 	                    <td>
-	                        <a href="{{route('remover_contato', $contato->id)}}" class="btn btn-sm btn-danger glyphicon glyphicon-remove"></a>
+	                        <a href="#" class="remover_contato" data-id = "{{$contato->id}}" ><li class="btn btn-sm btn-danger glyphicon glyphicon-remove"></li></a>
 	                    </td>
 	                </tr>
 	              @endforeach
@@ -60,11 +60,58 @@
 </div>
 
 
-		<script type="text/javascript" src="{{ URL::asset('theme/js/plugins/bootstrap/bootstrap-datepicker.js') }}"></script>
-        <script type="text/javascript" src="{{ URL::asset('theme/js/plugins/bootstrap/bootstrap-timepicker.min.js') }}"></script>
-        <script type="text/javascript" src="{{ URL::asset('theme/js/plugins/bootstrap/bootstrap-colorpicker.js') }}"></script>
-        <script type="text/javascript" src="{{ URL::asset('theme/js/plugins/bootstrap/bootstrap-file-input.js') }}"></script>
-        <script type="text/javascript" src="{{ URL::asset('theme/js/plugins/bootstrap/bootstrap-select.js') }}"></script>
-        <script type="text/javascript" src="{{ URL::asset('theme/js/plugins/tagsinput/jquery.tagsinput.min.js') }}"></script>
+		 <script>
+        
+        		$('.remover_contato').click(function() 
+        		{
+		            var contato_id = $(this).attr("data-id");
+		            deleteContato(contato_id);
+		        });
+
+				 function deleteContato(contato_id) {
+
+					swal({
+					  title: "Você quer remover este contato ?",
+					  text: "Você não poderá recuperar esta informação, após a remoção !",
+					  type: "warning",
+					  showCancelButton: true,
+					  confirmButtonColor: "#DD6B55",
+					  cancelButtonText: "Não",
+					  confirmButtonText: "Sim, Remover Contato !",
+					  closeOnConfirm: false
+					},function() {
+		                	$.ajax({
+		                            
+		                            url: "/usuario/contato/remover/"+contato_id,
+		                            type: "get",
+		                            
+		                            
+		                        })
+		                        .done(function() {
+		                            swal({
+		                                title: "Removido!",
+		                                text: "O contato foi removido com sucesso.",
+		                                type: "success",
+		                                confirmButtonText: "Ok"
+		                            }, function() {
+		                                setTimeout(function() { location.reload(1);}, 500);
+		                            });
+		                        }).error(function() {
+		                    swal({
+		                        title: "Erro",
+		                        text: "O contato não pode ser removido.",
+		                        type: "error",
+		                        confirmButtonText: "Ok"
+		                    }, function() {
+		                        location.reload();
+		                    });
+		                });
+            		});
+			};
+
+
+
+
+		</script>
 
 @endsection

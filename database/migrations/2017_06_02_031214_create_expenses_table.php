@@ -19,16 +19,17 @@ class CreateExpensesTable extends Migration
             $table->decimal('value', 15, 2);
 
             $table->integer('account_id')->unsigned();
-            $table->foreign('account_id')->references('id')->on('accounts');
+            $table->foreign('account_id')->references('id')->on('accounts')->onDelete('cascade');
 
             $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->integer('contact_id')->unsigned();
-            $table->foreign('contact_id')->references('id')->on('contacts');
+            $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
 
 
             $table->timestamps();
+            $table->engine = 'InnoDB';
 
         });
 

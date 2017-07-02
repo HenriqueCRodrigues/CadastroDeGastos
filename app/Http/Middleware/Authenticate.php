@@ -39,7 +39,7 @@ class Authenticate
                     Session::put('user.id', $id);
                 }
             }
-        
+
             $this->auth = $auth;
     }
 

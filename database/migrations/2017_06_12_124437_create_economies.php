@@ -16,13 +16,14 @@ class CreateEconomies extends Migration
             $table->increments('id');
 
             $table->integer('of_user')->unsigned();
-            $table->foreign('of_user')->references('id')->on('users');
+            $table->foreign('of_user')->references('id')->on('users')->onDelete('cascade');
             
             
             $table->string('desc');
             $table->decimal('value', 15, 2);
 
             $table->timestamps();
+            $table->engine = 'InnoDB';
         });
     }
 

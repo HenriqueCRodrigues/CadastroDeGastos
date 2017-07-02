@@ -106,7 +106,7 @@
 	                        <a href="{{route('editar_receita', $receita->id)}}" class="btn btn-sm btn-warning glyphicon glyphicon-pencil"></a>
 	                    </td>
 	                    <td>
-	                        <a href="{{route('remover_receita', $receita->id)}}" class="btn btn-sm btn-danger glyphicon glyphicon-remove"></a>
+	                        <a href="#" data-id="{{$receita->id}}" class="remover_receita"><li class="btn btn-sm btn-danger glyphicon glyphicon-remove"></li></a>
 	                    </td>
 	                </tr>
 	                @endforeach
@@ -116,12 +116,57 @@
 	</div>
 </div>
 
+ <script>
+        
+        		$('.remover_receita').click(function() 
+        		{
+		            var receita_id = $(this).attr("data-id");
+		            deleteReceita(receita_id);
+		        });
 
-		<script type="text/javascript" src="{{ URL::asset('theme/js/plugins/bootstrap/bootstrap-datepicker.js') }}"></script>
-        <script type="text/javascript" src="{{ URL::asset('theme/js/plugins/bootstrap/bootstrap-timepicker.min.js') }}"></script>
-        <script type="text/javascript" src="{{ URL::asset('theme/js/plugins/bootstrap/bootstrap-colorpicker.js') }}"></script>
-        <script type="text/javascript" src="{{ URL::asset('theme/js/plugins/bootstrap/bootstrap-file-input.js') }}"></script>
-        <script type="text/javascript" src="{{ URL::asset('theme/js/plugins/bootstrap/bootstrap-select.js') }}"></script>
-        <script type="text/javascript" src="{{ URL::asset('theme/js/plugins/tagsinput/jquery.tagsinput.min.js') }}"></script>
+				 function deleteReceita(receita_id) {
 
+					swal({
+					  title: "Você quer remover esta Receita ?",
+					  text: "Você não poderá recuperar esta informação, após a remoção !",
+					  type: "warning",
+					  showCancelButton: true,
+					  confirmButtonColor: "#DD6B55",
+					  cancelButtonText: "Não",
+					  confirmButtonText: "Sim, Remover Receita !",
+					  closeOnConfirm: false
+					},function() {
+		                	$.ajax({
+		                            
+		                            url: "/usuario/receita/remover/"+receita_id,
+		                            type: "get",
+		                            
+		                            
+		                        })
+		                        .done(function() {
+		                            swal({
+		                                title: "Removido!",
+		                                text: "A receita foi removida com sucesso.",
+		                                type: "success",
+		                                confirmButtonText: "Ok"
+		                            }, function() {
+		                                setTimeout(function() { location.reload(1);}, 500);
+		                            });
+		                        }).error(function() {
+		                    swal({
+		                        title: "Erro",
+		                        text: "A receita não pode ser removida.",
+		                        type: "error",
+		                        confirmButtonText: "Ok"
+		                    }, function() {
+		                        location.reload();
+		                    });
+		                });
+            		});
+			};
+
+
+
+
+		</script>
 @endsection

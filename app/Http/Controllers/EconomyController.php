@@ -76,12 +76,19 @@ class EconomyController extends Controller
     public function edit($id)
     {
         $idU = Auth::user()->id;
+        $economia = Economy::where(['id' => $id, 'of_user' => $idU])->first();
+        if ($economia != null) 
+        {
+            $economias = Economy::where('of_user', $idU)->get();
+
+
+            return view('carteira.economias', compact('economia','economias'));
+            
+        }
+
+        return  redirect()->route('index_economia');
+
         
-        $economias = Economy::where('of_user', $idU)->get();
-
-        $economia = Economy::findOrFail($id);
-
-        return view('carteira.economias', compact('economia','economias'));
     }
 
     /**
@@ -93,11 +100,19 @@ class EconomyController extends Controller
      */
     public function update(Request $request, $id)
     {
-            $economia       = Economy::findOrFail($id);
-            $economia->desc  = $request->desc;
-            $economia->value = $request->value;
-            
-            $economia->save();
+            $idU = Auth::user()->id;
+            $economia = Economy::where(['id' => $id, 'of_user' => $idU])->first();
+
+            if($economia != null) 
+            {
+                $economia->desc  = $request->desc;
+                $economia->value = $request->value;
+                
+                $economia->save();
+               
+            }
+
+          
     
 
 
@@ -112,6 +127,14 @@ class EconomyController extends Controller
      */
     public function destroy($id)
     {
+        $idU = Auth::user()->id;
+        $economia = Economy::where(['id' => $id, 'of_user' => $idU])->first();
+
+        if (!\Request::ajax() || $economia == null) 
+        {
+            abort(403);
+        }
+
         $economia = Economy::destroy($id);
 
         return  redirect()->route('index_economia');

@@ -20,9 +20,9 @@ class HomeController extends Controller
 
       $id = Auth::user()->id;
      
-      $totalExpenses = DB::table('expenses')->where('user_id', $id)->sum('value');
+      $totalExpenses = Expense::where('user_id', $id)->sum('value');
       
-      $totalRecipes  = DB::table('recipes')->where('user_id', $id)->sum('value');
+      $totalRecipes = Recipe::where('user_id', $id)->sum('value');
 
       $despesas = Expense::where('user_id', $id)->get();
 
@@ -36,3 +36,7 @@ class HomeController extends Controller
         return view('carteira.dashboard', compact('despesas', 'receitas','contas', 'contatos', 'totalExpenses', 'totalRecipes'));
     }
 }
+
+
+
+

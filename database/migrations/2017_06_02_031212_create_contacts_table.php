@@ -16,7 +16,7 @@ class CreateContactsTable extends Migration
             $table->increments('id');
 
             $table->integer('of_user')->unsigned();
-            $table->foreign('of_user')->references('id')->on('users');
+            $table->foreign('of_user')->references('id')->on('users')->onDelete('cascade');
             
             
             $table->string('name');
@@ -24,6 +24,7 @@ class CreateContactsTable extends Migration
             $table->string('email', 100);
 
             $table->timestamps();
+            $table->engine = 'InnoDB';
         });
     }
 

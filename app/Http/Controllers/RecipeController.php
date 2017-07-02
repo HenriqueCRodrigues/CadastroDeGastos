@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 use Auth;
 use Session;
+use App\Models\Expense;
 use App\Models\Recipe;
 use App\Models\Account;
 use App\Models\Contact;
@@ -26,8 +27,8 @@ class RecipeController extends Controller
        
         $id = Auth::user()->id;
 
-        $totalExpenses = DB::table('expenses')->where('user_id', $id)->sum('value');
-        $totalRecipes  = DB::table('recipes')->where('user_id', $id)->sum('value');
+        $totalExpenses = Expense::where('user_id', $id)->sum('value');
+        $totalRecipes = Recipe::where('user_id', $id)->sum('value');
 
         Session::put('user.saldo', $totalRecipes-$totalExpenses);
         Session::put('user.id', $id);        
@@ -92,16 +93,26 @@ class RecipeController extends Controller
     public function edit($id)
     {
         $idU = Auth::user()->id;
+        $receitas = Recipe::where(['id' => $id, 'user_id' => $idU])->first();
+
+        if ($receitas != null) 
+        {
         
-        $receitas = Recipe::where('user_id', $idU)->get();
+            $receitas = Recipe::where('user_id', $idU)->get();
 
-        $contas = Account::where('of_user', $idU)->get();
+            $contas = Account::where('of_user', $idU)->get();
 
-        $contatos = Contact::where('of_user', $idU)->get();
+            $contatos = Contact::where('of_user', $idU)->get();
 
-        $receita = Recipe::findOrFail($id);
+            
 
-        return view('carteira.receita', compact('receitas', 'contas', 'contatos', 'receita'));
+            return view('carteira.receita', compact('receitas', 'contas', 'contatos', 'receita'));
+
+        }
+
+        return  redirect()->route('index_receita');
+
+
     }
 
     /**
@@ -113,16 +124,25 @@ class RecipeController extends Controller
      */
     public function update(RecipeRequest $request, $id)
     {
-                    $receita = Recipe::findOrFail($id);
-                    $receita->name          = $request->name;
-                    $receita->date          = $request->date;
-                    $receita->value         = $request->value;
-                    $receita->account_id    = $request->account_id;
-                    $receita->contact_id    = $request->contact_id;
-                    
-                    $receita->save();
+           
+            $idU = Auth::user()->id;
+            $receitas = Recipe::where(['id' => $id, 'user_id' => $idU])->first();
+            
+            if($receitas != null) 
+            {
+                
+                $receita->name          = $request->name;
+                $receita->date          = $request->date;
+                $receita->value         = $request->value;
+                $receita->account_id    = $request->account_id;
+                $receita->contact_id    = $request->contact_id;
+                
+                $receita->save();
 
-         return  redirect()->route('index_receita');
+            }
+            
+
+            return  redirect()->route('index_receita');
     }
 
     /**
@@ -133,6 +153,14 @@ class RecipeController extends Controller
      */
     public function destroy($id)
     {
+        $idU = Auth::user()->id;
+        $receitas = Recipe::where(['id' => $id, 'user_id' => $idU])->first();
+        
+        if (!\Request::ajax() || $receitas == null) 
+        {
+            abort(403);
+        }
+
         $receita = Recipe::destroy($id);
 
         return  redirect()->route('index_receita');

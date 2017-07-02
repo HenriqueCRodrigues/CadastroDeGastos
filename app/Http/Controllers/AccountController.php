@@ -79,12 +79,20 @@ class AccountController extends Controller
     public function edit($id)
     {
         $idU = Auth::user()->id;
-        
-        $contas = Account::where('of_user', $idU)->get();
+        $conta = Account::where(['id' => $id, 'of_user' => $idU])->first();
+     
+        if($conta != null) 
+        {
 
-        $conta = Account::findOrFail($id);
-        $tc = $conta->type_account_id;
-        return view('carteira.conta', compact('contas','conta', 'tc'));
+            $contas = Account::where('of_user', $idU)->get();
+
+            $tc = $conta->type_account_id;
+            return view('carteira.conta', compact('contas','conta', 'tc'));
+            
+        }
+
+
+        return redirect()->route('index_conta');
     }
 
     /**
@@ -96,14 +104,21 @@ class AccountController extends Controller
      */
     public function update(AccountRequest $request, $id)
     {
+            $idU = Auth::user()->id;
 
-            $account                  = Account::findOrFail($id);
-            $account->name_bank       = $request->name_bank;
-            $account->agency          = $request->agency;
-            $account->number          = $request->number;
-            $account->type_account_id = $request->type_account_id;
+            $account = Account::where(['id' => $id, 'of_user' => $idU])->first();
             
-            $account->save();
+            if($account != null) 
+            {
+                $account->name_bank       = $request->name_bank;
+                $account->agency          = $request->agency;
+                $account->number          = $request->number;
+                $account->type_account_id = $request->type_account_id;
+                
+                $account->save();
+                
+            }
+            
     
 
 
@@ -118,6 +133,14 @@ class AccountController extends Controller
      */
     public function destroy($id)
     {
+        $idU = Auth::user()->id;
+        $conta = Account::where(['id' => $id, 'of_user' => $idU])->first();
+        
+        if (!\Request::ajax() || $conta == null) 
+        {
+            abort(403);
+        }
+
         $conta = Account::destroy($id);
 
         return  redirect()->route('index_conta');

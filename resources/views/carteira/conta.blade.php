@@ -66,7 +66,7 @@
 	                        <a href="{{route('editar_conta', $conta->id)}}" class="btn btn-sm btn-warning glyphicon glyphicon-pencil"></a>
 	                    </td>
 	                    <td>
-	                        <a href="{{route('remover_conta', $conta->id)}}" class="btn btn-sm btn-danger glyphicon glyphicon-remove"></a>
+	                        <a href="#" class="remover_conta" data-id="{{$conta->id}}"><li class="btn btn-sm btn-danger glyphicon glyphicon-remove"></li></a>
 	                    </td>
 	                </tr>
 	                @endforeach
@@ -77,11 +77,59 @@
 </div>
 
 
-		<script type="text/javascript" src="{{ URL::asset('theme/js/plugins/bootstrap/bootstrap-datepicker.js') }}"></script>
-        <script type="text/javascript" src="{{ URL::asset('theme/js/plugins/bootstrap/bootstrap-timepicker.min.js') }}"></script>
-        <script type="text/javascript" src="{{ URL::asset('theme/js/plugins/bootstrap/bootstrap-colorpicker.js') }}"></script>
-        <script type="text/javascript" src="{{ URL::asset('theme/js/plugins/bootstrap/bootstrap-file-input.js') }}"></script>
-        <script type="text/javascript" src="{{ URL::asset('theme/js/plugins/bootstrap/bootstrap-select.js') }}"></script>
-        <script type="text/javascript" src="{{ URL::asset('theme/js/plugins/tagsinput/jquery.tagsinput.min.js') }}"></script>
+
+        <script>
+        
+        		$('.remover_conta').click(function() 
+        		{
+		            var conta_id = $(this).attr("data-id");
+		            deleteConta(conta_id);
+		        });
+
+				 function deleteConta(conta_id) {
+
+					swal({
+					  title: "Você quer remover esta conta ?",
+					  text: "Você não poderá recuperar esta informação, após a remoção !",
+					  type: "warning",
+					  showCancelButton: true,
+					  confirmButtonColor: "#DD6B55",
+					  cancelButtonText: "Não",
+					  confirmButtonText: "Sim, Remover Conta !",
+					  closeOnConfirm: false
+					},function() {
+		                	$.ajax({
+		                            
+		                            url: "/usuario/conta/remover/"+conta_id,
+		                            type: "get",
+		                            
+		                            
+		                        })
+		                        .done(function() {
+		                            swal({
+		                                title: "Removido!",
+		                                text: "A conta foi removida com sucesso.",
+		                                type: "success",
+		                                confirmButtonText: "Ok"
+		                            }, function() {
+		                                setTimeout(function() { location.reload(1);}, 500);
+		                            });
+		                        }).error(function() {
+		                    swal({
+		                        title: "Erro",
+		                        text: "A conta não pode ser removida.",
+		                        type: "error",
+		                        confirmButtonText: "Ok"
+		                    }, function() {
+		                        location.reload();
+		                    });
+		                });
+            		});
+			};
+
+
+
+
+		</script>
 
 @endsection

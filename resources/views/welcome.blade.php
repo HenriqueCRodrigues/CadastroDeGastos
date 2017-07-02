@@ -9,6 +9,8 @@
 
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" type="text/css" id="theme" href="{{ URL::asset('theme/css/theme-default.css') }}"/>
+
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('dist/sweetalert.css')}}">
     
     <!-- CHARTS-->
     {!! Charts::assets() !!}
@@ -16,7 +18,7 @@
     <!-- THEME -->
 
     <!-- START PLUGINS --> 
-    
+    <script type="text/javascript" src="{{ URL::asset('dist/sweetalert.min.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('theme/js/plugins/jquery/jquery.min.js') }}"></script> 
     <script type="text/javascript" src="{{ URL::asset('theme/js/plugins/jquery/jquery-ui.min.js') }}"></script> 
     <script type="text/javascript" src="{{ URL::asset('theme/js/plugins/bootstrap/bootstrap.min.js') }}"></script>        

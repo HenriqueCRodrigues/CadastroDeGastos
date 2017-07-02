@@ -15,6 +15,7 @@ class CreateTypeAccountsTable extends Migration
        Schema::create('type_accounts', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 20);
+            $table->engine = 'InnoDB';
         });
     }
 

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Auth;
 use Session;
 use App\Models\Expense;
+use App\Models\Recipe;
 use App\Models\Account;
 use App\Models\Contact;
 use App\Http\Requests;
@@ -26,8 +27,8 @@ class ExpenseController extends Controller
 
         $id = Auth::user()->id;
 
-        $totalExpenses = DB::table('expenses')->where('user_id', $id)->sum('value');
-        $totalRecipes  = DB::table('recipes')->where('user_id', $id)->sum('value');
+        $totalExpenses = Expense::where('user_id', $id)->sum('value');
+        $totalRecipes = Recipe::where('user_id', $id)->sum('value');
 
         Session::put('user.saldo', $totalRecipes-$totalExpenses);
         Session::put('user.id', $id);        
@@ -91,16 +92,26 @@ class ExpenseController extends Controller
     public function edit($id)
     {
         $idU = Auth::user()->id;
+        $despesa = Expense::where(['id' => $id, 'user_id' => $idU])->first();
         
-        $despesas = Expense::where('user_id', $idU)->get();
+        if ($despesa != null) 
+        {
+            $despesas = Expense::where('user_id', $idU)->get();
 
-        $contas = Account::where('of_user', $idU)->get();
+            $contas = Account::where('of_user', $idU)->get();
 
-        $contatos = Contact::where('of_user', $idU)->get();
+            $contatos = Contact::where('of_user', $idU)->get();
 
-        $despesa = Expense::findOrFail($id);
 
-        return view('carteira.despesa', compact('despesas', 'contas', 'contatos', 'despesa'));
+            return view('carteira.despesa', compact('despesas', 'contas', 'contatos', 'despesa'));
+            
+        }
+
+
+        return  redirect()->route('index_despesa');
+
+
+       
     }
 
     /**
@@ -112,14 +123,22 @@ class ExpenseController extends Controller
      */
     public function update(ExpenseRequest $request, $id)
     {
-                    $receita             = Expense::findOrFail($id);
-                    $receita->name       = $request->name;
-                    $receita->date       = $request->date;
-                    $receita->value      = $request->value;
-                    $receita->account_id = $request->account_id;
-                    $receita->contact_id = $request->contact_id;
+                    $idU = Auth::user()->id;
+                    $despesa = Expense::where(['id' => $id, 'user_id' => $idU])->first();
                     
-                    $receita->save();
+                     if ($despesa != null) 
+                     {
+
+                        $receita             = Expense::findOrFail($id);
+                        $receita->name       = $request->name;
+                        $receita->date       = $request->date;
+                        $receita->value      = $request->value;
+                        $receita->account_id = $request->account_id;
+                        $receita->contact_id = $request->contact_id;
+                        
+                        $receita->save();
+                        
+                     }
 
          return  redirect()->route('index_despesa');
     }
@@ -132,6 +151,14 @@ class ExpenseController extends Controller
      */
     public function destroy($id)
     {
+        $idU = Auth::user()->id;
+        $despesa = Expense::where(['id' => $id, 'user_id' => $idU])->first();
+        
+        if (!\Request::ajax() || $despesa == null) 
+        {
+            abort(403);
+        }
+
         $despesa = Expense::destroy($id);
 
         return  redirect()->route('index_despesa');
