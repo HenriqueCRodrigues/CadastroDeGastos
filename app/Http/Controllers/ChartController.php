@@ -17,7 +17,10 @@ class ChartController extends Controller
 
       $expenses = Expense::where('user_id', Auth::user()->id)->sum('value');
       $recipes = Recipe::where('user_id', Auth::user()->id)->sum('value');
-    
+      
+      if($expenses == null) $expenses = 0;
+      if($recipes == null) $recipes = 0;
+
     
       
         $chart = Charts::create('bar', 'highcharts')

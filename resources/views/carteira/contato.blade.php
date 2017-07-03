@@ -82,7 +82,7 @@
 					},function() {
 		                	$.ajax({
 		                            
-		                            url: "/usuario/contato/remover/"+contato_id,
+		                            url: "/usuario/contatos/remover/"+contato_id,
 		                            type: "get",
 		                            
 		                            

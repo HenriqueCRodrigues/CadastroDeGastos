@@ -100,7 +100,7 @@
 					},function() {
 		                	$.ajax({
 		                            
-		                            url: "/usuario/conta/remover/"+conta_id,
+		                            url: "/usuario/contas/remover/"+conta_id,
 		                            type: "get",
 		                            
 		                            

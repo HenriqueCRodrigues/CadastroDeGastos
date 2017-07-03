@@ -104,7 +104,7 @@
 	                         <a href="{{route('editar_despesa', $despesa->id)}}" class="btn btn-sm btn-warning glyphicon glyphicon-pencil"></a>
 	                    </td>
 	                    <td>
-	                        <a href="#" class="remover_despesa"><li class="btn btn-sm btn-danger glyphicon glyphicon-remove"></li></a>
+	                        <a href="#" class="remover_despesa" data-id = "{{$despesa->id}}"><li class="btn btn-sm btn-danger glyphicon glyphicon-remove"></li></a>
 	                    </td>
 	                </tr>
 	                @endforeach
@@ -118,7 +118,7 @@
 				$('.remover_despesa').click(function() 
         		{
 		            var despesa_id = $(this).attr("data-id");
-		            deleteContato(despesa_id);
+		            deleteDespesa(despesa_id);
 		        });
 
 				 function deleteDespesa(despesa_id) {
@@ -135,7 +135,7 @@
 					},function() {
 		                	$.ajax({
 		                            
-		                            url: "/usuario/despesa/remover/"+despesa_id,
+		                            url: "/usuario/despesas/remover/"+despesa_id,
 		                            type: "get",
 		                            
 		                            

@@ -138,7 +138,7 @@
 					},function() {
 		                	$.ajax({
 		                            
-		                            url: "/usuario/receita/remover/"+receita_id,
+		                            url: "/usuario/receitas/remover/"+receita_id,
 		                            type: "get",
 		                            
 		                            

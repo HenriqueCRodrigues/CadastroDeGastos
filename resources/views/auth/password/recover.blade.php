@@ -20,34 +20,29 @@
         
             <div class="login-box animated fadeInDown">
                 <div class="login-body">
-                    <form action="{{ url('login') }}" class="form-horizontal" method="post">
-                    <div class="login-title"><strong>Email</strong></div>
-                    <div class="form-group">
-                        <div class="col-md-12">
-                            <input type="text" name="email" class="form-control" placeholder="Email"/>
-                        </div>
-                    </div>
+                    <div class="login-title"><strong>Insira seu email, para gerar uma nova senha para o mesmo</strong></div>
+                    <form action="{{ url('') }}" class="form-horizontal" method="POST">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    
+                    
                     <div class="form-group">
                         <div class="col-md-12">
-                            <input type="password" name="password" class="form-control" placeholder="Password"/>
+                            <input type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="email"/>
                         </div>
                     </div>
+
+                    
+
                     <div class="form-group">
-                        <div class="form-group col-md-7">
-                            <a href="{{ url('cadastro') }}" class="btn btn-link btn-block">Ainda não possui conta?</a>
+                        <div class="col-md-6">
+                            <a href="{{ url('login') }}" class="btn btn-link btn-block">Acessar Area de Login</a>
                         </div>
 
-                        <div class="form-group col-md-5">
-                            <a href="{{ url('recuperar') }}" class="btn btn-link btn-block">Esqueceu a senha ?</a>
+                        <div class="col-md-6">
+                            <input type="submit" value="Enviar Email" class="btn btn-info btn-block">
                         </div>
-                    </div>
-                    <center>
                         
-                        <div class="form-group" style="width: 60%;">
-                            <input type="submit" value="Logar" class="btn btn-info btn-block" style="height: 50px;">
-                        </div>
-                    </center>
+                    </div>
                     </form>
                 </div>
                 <div class="login-footer">

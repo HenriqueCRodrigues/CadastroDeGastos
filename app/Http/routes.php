@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 /*
 |--------------------------------------------------------------------------
@@ -23,11 +23,14 @@ Route::get('cadastro', 'Auth\AuthController@getRegister');
 Route::post('register', 'Auth\AuthController@postRegister');
 
 
+//Rptas de Recuperação
+Route::get('recuperar', function(){
+	return view('auth.password.recover');
+});
 
-Route::get('/', function () {
-    if(!Auth::check())
-        return redirect('login');
 
+Route::get('/', function () 
+{
     return redirect()->route('index');
 });
 
@@ -41,7 +44,7 @@ Route::group(['prefix' => 'usuario', 'middleware' => 'auth'], function () {
 		Route::get('editar', ['as'=>'editar_usuario', 'uses'=>'UserController@edit']);
 		Route::post('atualizar', ['as'=>'atualizar_usuario', 'uses'=>'UserController@update']);
 
-		Route::group(['prefix'=>'contato'], function(){
+		Route::group(['prefix'=>'contatos'], function(){
 			Route::get('/',['as' => 'index_contato', 'uses'=>'ContactController@index']);
 			Route::post('salvar', ['as' => 'salvar_contato', 'uses' => 'ContactController@store']);
 			Route::get('editar/{id}', ['as' => 'editar_contato', 'uses' => 'ContactController@edit']);
@@ -50,7 +53,7 @@ Route::group(['prefix' => 'usuario', 'middleware' => 'auth'], function () {
 
 		});
 	    
-	    Route::group(['prefix'=>'conta'], function(){
+	    Route::group(['prefix'=>'contas'], function(){
 
 	    	Route::get('/', ['as'=>'index_conta', 'uses'=>'AccountController@index']);
 	    	Route::post('salvar', ['as' => 'salvar_conta', 'uses' => 'AccountController@store']);
