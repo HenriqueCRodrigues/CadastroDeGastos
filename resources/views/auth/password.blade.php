@@ -21,8 +21,8 @@
             <div class="login-box animated fadeInDown">
                 <div class="login-body">
                     <div class="login-title"><strong>Insira seu email, para gerar uma nova senha para o mesmo</strong></div>
-                    <form action="{{ url('') }}" class="form-horizontal" method="POST">
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <form method="POST" action="acesso" class="form-horizontal">
+                      {!! csrf_field() !!}
                     
                     
                     <div class="form-group">

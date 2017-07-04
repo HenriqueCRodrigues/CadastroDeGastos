@@ -23,10 +23,13 @@ Route::get('cadastro', 'Auth\AuthController@getRegister');
 Route::post('register', 'Auth\AuthController@postRegister');
 
 
-//Rptas de Recuperação
-Route::get('recuperar', function(){
-	return view('auth.password.recover');
-});
+//Rotas de Recuperação
+Route::get('redefinir/acesso', 'Auth\PasswordController@getEmail');
+Route::post('redefinir/acesso', 'Auth\PasswordController@postEmail');
+
+//Rotas de resetar senha
+Route::get('redefinir/senha/{token}', 'Auth\PasswordController@getReset');
+Route::post('redefinir/senha', 'Auth\PasswordController@postReset');
 
 
 Route::get('/', function () 
