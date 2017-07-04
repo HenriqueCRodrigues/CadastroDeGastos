@@ -149,6 +149,8 @@ return [
         ConsoleTVs\Charts\ChartsServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
 
+        Jrean\UserVerification\UserVerificationServiceProvider::class,
+
     ],
 
     /*
@@ -201,6 +203,8 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+
+        'UserVerification' => Jrean\UserVerification\Facades\UserVerification::class,
 
     ],
 

@@ -31,6 +31,9 @@ Route::post('redefinir/acesso', 'Auth\PasswordController@postEmail');
 Route::get('redefinir/senha/{token}', 'Auth\PasswordController@getReset');
 Route::post('redefinir/senha', 'Auth\PasswordController@postReset');
 
+Route::get('verification/error', 'Auth\AuthController@getVerificationError');
+Route::get('verification/{token}', 'Auth\AuthController@getVerification');
+
 
 Route::get('/', function () 
 {
